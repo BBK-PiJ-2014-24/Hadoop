@@ -1,3 +1,10 @@
+/**
+ * WordCount File from apache.hadoop site, using inner classes for Mapper, Reducer and 
+ * the main runs the task.
+ */
+
+
+
 import java.io.IOException;
 import java.util.StringTokenizer;
 
