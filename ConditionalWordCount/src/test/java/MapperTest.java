@@ -13,13 +13,13 @@ public class MapperTest {
 	// Fields
 	// ------
 	MapDriver<Object, Text, Text, IntWritable> mapDriver;
-	
+	ConditionalWordCount_Mapper myMapper;
 	
 	
 	@Before
 	public void setUp(){
 		mapDriver = new MapDriver<Object, Text, Text, IntWritable>();
-		ConditionalWordCount_Mapper myMapper = new ConditionalWordCount_Mapper();
+		myMapper = new ConditionalWordCount_Mapper();
 		mapDriver.setMapper(myMapper);
 	}
 	
