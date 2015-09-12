@@ -23,6 +23,9 @@ public class ConditionalWordCount_Mapper
       
       while (itr.hasMoreTokens()) {
         word.set(itr.nextToken());
+        String str = word.toString();
+        str = str.toLowerCase();
+        word = new Text(str);
         context.write(word, one);
       }
     }
