@@ -1,8 +1,11 @@
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
 import org.junit.*;
 import org.junit.Before;
+import org.junit.Assert.*;
 
 
 
@@ -57,19 +60,22 @@ public class MapperTest {
 	}
 	
 	
-	@Test void testMap3(){
+	@Test 
+	public void testMap3(){
 		Text word = new Text("Hello.");
-		AssertEquals("Test Full Stop", new Text("Hello"), myMapper.screenPunctuation(word));		
+		assertEquals("Test Full Stop", new Text("Hello"), myMapper.screenPunctuation(word));		
+		word.set("Hello!");
+		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("Hello\"");
+		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("Hello'");
+		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("Hello-");
+		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
 	}
 	
 	
-	
-	private void AssertEquals(String string, Text screenPunctuation, Text text) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+/*
 	@Test
 	public void testMap4() throws IOException, InterruptedException{
 		Text value = new Text("Rain, Spain, rain., falls!");
@@ -79,9 +85,8 @@ public class MapperTest {
 		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
 		mapDriver.withOutput(new Text("falls"), new IntWritable(1));
 		mapDriver.runTest();
-	}
-		
-		
+	}	
+*/
 }
 	
 	
