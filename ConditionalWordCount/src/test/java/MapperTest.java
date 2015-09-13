@@ -67,11 +67,19 @@ public class MapperTest {
 		word.set("Hello!");
 		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
 		word.set("Hello\"");
-		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		assertEquals("Test \"", new Text("Hello"), myMapper.screenPunctuation(word));
 		word.set("Hello'");
-		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		assertEquals("Test '", new Text("Hello"), myMapper.screenPunctuation(word));
 		word.set("Hello-");
-		assertEquals("Test !", new Text("Hello"), myMapper.screenPunctuation(word));
+		assertEquals("Test -", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("\"Hello");
+		assertEquals("Test \" at beginning", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("'Hello");
+		assertEquals("Test ' at beginning", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("-Hello");
+		assertEquals("Test - at beginning", new Text("Hello"), myMapper.screenPunctuation(word));
+		word.set("\"Hello\"");
+		assertEquals("Test \" at beginning and end ", new Text("Hello"), myMapper.screenPunctuation(word));
 	}
 	
 	
