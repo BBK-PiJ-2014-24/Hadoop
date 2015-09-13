@@ -23,11 +23,25 @@ public class ConditionalWordCount_Mapper
       
       while (itr.hasMoreTokens()) {
         word.set(itr.nextToken());
-        String str = word.toString();
+        String str = word.toString();   // convert text to string
         str = str.toLowerCase();
-        word = new Text(str);
+        word.set(str);      // reset word to lower case
         context.write(word, one);
       }
+    }
+    
+    
+    public Text screenPunctuation(Text word){
+    	
+    	String str = word.toString();
+    	int end= str.length()-1 ;
+    	char c = str.charAt(end);
+    	if(!Character.isAlphabetic(c)){
+    		str = str.substring(0,end); 
+    		word.set(str);
+    		System.out.println(str);
+    	}
+    	return word;
     }
 
 	
