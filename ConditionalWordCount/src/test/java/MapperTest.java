@@ -24,16 +24,36 @@ public class MapperTest {
 	}
 	
 	
-	
+	/**
+	 * Tests Simple Word Count
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	@Test
 	public void testMap1() throws IOException, InterruptedException {
-	 Text value = new Text("Rain Spain Rain");
+	 Text value = new Text("rain spain rain");
 	                     
 	   mapDriver.withInput(new LongWritable(1), value);
-	   mapDriver.withOutput(new Text("Rain"),new IntWritable(1));
-	   mapDriver.withOutput(new Text("Spain"),new IntWritable(1));
-	   mapDriver.withOutput(new Text("Rain"), new IntWritable(1));
+	   mapDriver.withOutput(new Text("rain"),new IntWritable(1));
+	   mapDriver.withOutput(new Text("spain"),new IntWritable(1));
+	   mapDriver.withOutput(new Text("rain"), new IntWritable(1));
 	   mapDriver.runTest();
+	}
+	
+	/**
+	 * Test for upper-case conversion
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	
+	@Test
+	public void testMap2() throws IOException, InterruptedException{
+		Text value = new Text("Rain Spain rain");
+		mapDriver.withInput(new LongWritable(1), value);
+		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
+		mapDriver.withOutput(new Text("spain"), new IntWritable(1));
+		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
+		mapDriver.runTest();
 	}
 	
 }
