@@ -56,6 +56,22 @@ public class MapperTest {
 		mapDriver.runTest();
 	}
 	
+	@Test
+	public void testMap3() throws IOException, InterruptedException{
+		Text value = new Text("Rain, Spain, rain.");
+		mapDriver.withInput(new LongWritable(1), value);
+		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
+		mapDriver.withOutput(new Text("spain"),new IntWritable(1));
+		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
+		mapDriver.runTest();
+	}
+		
+		
+	}
+	
+	
+
+	
 }
 	
 	
