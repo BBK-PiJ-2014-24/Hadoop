@@ -56,22 +56,32 @@ public class MapperTest {
 		mapDriver.runTest();
 	}
 	
+	
+	@Test void testMap3(){
+		Text word = new Text("Hello.");
+		AssertEquals("Test Full Stop", new Text("Hello"), myMapper.screenPunctuation(word));		
+	}
+	
+	
+	
+	private void AssertEquals(String string, Text screenPunctuation, Text text) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	@Test
-	public void testMap3() throws IOException, InterruptedException{
-		Text value = new Text("Rain, Spain, rain.");
+	public void testMap4() throws IOException, InterruptedException{
+		Text value = new Text("Rain, Spain, rain., falls!");
 		mapDriver.withInput(new LongWritable(1), value);
 		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("spain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
+		mapDriver.withOutput(new Text("falls"), new IntWritable(1));
 		mapDriver.runTest();
 	}
 		
 		
-	}
-	
-	
-
-	
 }
 	
 	
