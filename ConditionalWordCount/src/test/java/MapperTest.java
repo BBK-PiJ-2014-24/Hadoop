@@ -101,21 +101,34 @@ public class MapperTest {
 		mapDriver.runTest();
 	}
 	
-	
 	/**
 	 * Test for screenStem()
 	 */
-	
 	@Test
-	public void testMap5(){
-		Text value = new Text("rain raining rained ");
+	public void testMap6(){
+		
+		Text word = new Text("orderly");
+		assertEquals("Test suffix -ly", new Text("order"), ConditionalWordCount_Mapper.screenStem(word));
+		word.set("ordering");
+		assertEquals("Test suffix -ing", new Text("order"), ConditionalWordCount_Mapper.screenStem(word));
+		word.set("ordered");
+		assertEquals("Test suffix -ed", new Text("order"), ConditionalWordCount_Mapper.screenStem(word));
+		
+	}
+	
+	
+	/**
+	 * Test screemStem in the Mapper
+	 */
+	@Test
+	public void testMap7(){
+		Text value = new Text("rain raining rained orderly");
 		mapDriver.withInput(new LongWritable(1), value);
 		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
+		mapDriver.withOutput(new Text("order"), new IntWritable(1));
 	}	
-		
-	}
 
 }
 	

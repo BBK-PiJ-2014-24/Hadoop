@@ -26,12 +26,14 @@ public class ConditionalWordCount_Mapper
         String str = word.toString();   // convert text to string
         str = str.toLowerCase();
         word.set(str);      // reset word to lower case
+        
+        word.set(ConditionalWordCount_Mapper.screenPunctuation(word)); //check punctuation
         context.write(word, one);
       }
     }
     
     
-    public Text screenPunctuation(Text word){
+    public static Text screenPunctuation(Text word){
     	
     	String str = word.toString();
     	int end= str.length()-1 ;
@@ -44,12 +46,34 @@ public class ConditionalWordCount_Mapper
     	else if(!Character.isAlphabetic(c1))
     		str = str.substring(1);
     	
-    	
     	else if(!Character.isAlphabetic(c2))
     		str = str.substring(0,end); 
     	
     	word.set(str);
-		System.out.println(str);
+    	
+    	return word;
+    }
+    
+    
+    
+    public static Text screenStem(Text word){
+    	
+    	String str = word.toString();
+    	int end = str.length()-1;
+    	System.out.println(str.substring(end-1));
+    	
+    	if(str.substring(end-2).equals("ing")){
+    		str = str.substring(0,end-2);
+    		word.set(str);
+    	}
+    	else if(str.substring(end-1).equals("ed")){
+    		str = str.substring(0,end-1);
+    		word.set(str);
+    	}
+    	else if(str.substring(end-1).equals("ly")){
+    		str = str.substring(0,end-1);
+    		word.set(str);
+    	}
     	
     	return word;
     }
