@@ -83,18 +83,40 @@ public class MapperTest {
 	}
 	
 	
-/*
+	/**
+	 * Test for the incorporation of screenPunctuation() in Mapper
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+
 	@Test
 	public void testMap4() throws IOException, InterruptedException{
-		Text value = new Text("Rain, Spain, rain., falls!");
+		Text value = new Text(" 'Rain \"Spain rain. falls! \"plain\"");
 		mapDriver.withInput(new LongWritable(1), value);
 		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("spain"),new IntWritable(1));
 		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
 		mapDriver.withOutput(new Text("falls"), new IntWritable(1));
+		mapDriver.withOutput(new Text("plain"), new IntWritable(1));
 		mapDriver.runTest();
+	}
+	
+	
+	/**
+	 * Test for screenStem()
+	 */
+	
+	@Test
+	public void testMap5(){
+		Text value = new Text("rain raining rained ");
+		mapDriver.withInput(new LongWritable(1), value);
+		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
+		mapDriver.withOutput(new Text("rain"),new IntWritable(1));
+		mapDriver.withOutput(new Text("rain"), new IntWritable(1));
 	}	
-*/
+		
+	}
+
 }
 	
 	
