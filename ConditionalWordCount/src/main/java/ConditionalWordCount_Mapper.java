@@ -35,8 +35,16 @@ public class ConditionalWordCount_Mapper
     	
     	String str = word.toString();
     	int end= str.length()-1 ;
-    	char c = str.charAt(end);
-    	if(!Character.isAlphabetic(c)){
+    	char c1 = str.charAt(0);
+    	char c2 = str.charAt(end);
+    	
+    	
+    	
+    	if(!Character.isAlphabetic(c1)){
+    		str = str.substring(1);
+    	}
+    	
+    	if(!Character.isAlphabetic(c2)){
     		str = str.substring(0,end); 
     		word.set(str);
     		System.out.println(str);
