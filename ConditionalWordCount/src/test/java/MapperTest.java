@@ -113,7 +113,15 @@ public class MapperTest {
 		assertEquals("Test suffix -ing", new Text("order"), ConditionalWordCount_Mapper.screenStem(word));
 		word.set("ordered");
 		assertEquals("Test suffix -ed", new Text("order"), ConditionalWordCount_Mapper.screenStem(word));
-		
+		word.set("ring");
+		assertEquals("Test suffix r-ing", new Text("ring"), ConditionalWordCount_Mapper.screenStem(word));
+		word.set("fling");
+		assertEquals("Test suffix fl-ing", new Text("fling"), ConditionalWordCount_Mapper.screenStem(word));
+		word.set("fly");
+		assertEquals("Test suffix -ed", new Text("fly"), ConditionalWordCount_Mapper.screenStem(word));
+		word.set("a");
+		assertEquals("Test word a", new Text("a"), ConditionalWordCount_Mapper.screenStem(word));
+	
 	}
 	
 	

@@ -28,10 +28,16 @@ public class ConditionalWordCount_Mapper
         word.set(str);      // reset word to lower case
         
         word.set(ConditionalWordCount_Mapper.screenPunctuation(word)); //check punctuation
+        word.set(ConditionalWordCount_Mapper.screenStem(word)); // screen stems
         context.write(word, one);
       }
     }
     
+    /**
+     * Method to screen out punctuation
+     * @param word
+     * @return
+     */
     
     public static Text screenPunctuation(Text word){
     	
@@ -55,24 +61,32 @@ public class ConditionalWordCount_Mapper
     }
     
     
-    
+    /**
+     * Method to reduce words to stems. Screen works on -ed, -ly, -ing. 
+     * Screen only works on words greater than three letters.
+     * @param word
+     * @return
+     */
     public static Text screenStem(Text word){
     	
     	String str = word.toString();
     	int end = str.length()-1;
-    	System.out.println(str.substring(end-1));
-    	
-    	if(str.substring(end-2).equals("ing")){
-    		str = str.substring(0,end-2);
-    		word.set(str);
-    	}
-    	else if(str.substring(end-1).equals("ed")){
-    		str = str.substring(0,end-1);
-    		word.set(str);
-    	}
-    	else if(str.substring(end-1).equals("ly")){
-    		str = str.substring(0,end-1);
-    		word.set(str);
+  
+    	if(end+1 > 3){
+	    	// -ing screen with min word length to avoid r-ing, 
+	    	if(str.substring(end-2).equals("ing") && end+1 > 5){
+	    		str = str.substring(0,end-2);
+	    		word.set(str);
+	    	}
+	    	else if(str.substring(end-1).equals("ed")){
+	    		str = str.substring(0,end-1);
+	    		word.set(str);
+	    	}
+	    	// -ly screen with min word length to avoid f-ly
+	    	else if(str.substring(end-1).equals("ly")){
+	    		str = str.substring(0,end-1);
+	    		word.set(str);
+	    	}
     	}
     	
     	return word;
