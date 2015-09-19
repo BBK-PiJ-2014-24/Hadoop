@@ -37,7 +37,7 @@ public class MeanTeamTester {
 		 */
 		@Test
 		public void testMap1() throws IOException, InterruptedException {
-		 Text value = new Text("rain spain rain");
+		 
 		                     
 		   mapDriver.withInput(new LongWritable(1),new Text("Stewart	2"));
 		   mapDriver.withInput(new LongWritable(1), new Text("Stewart	3"));
