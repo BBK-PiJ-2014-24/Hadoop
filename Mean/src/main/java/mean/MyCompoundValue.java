@@ -45,6 +45,15 @@ public class MyCompoundValue implements Writable{
 		this.count =count;
 	}
 	
+	
+	public int getTotal(){
+		return this.total;
+	}
+	
+	public int getCount(){
+		return this.count;
+	}
+	
 
 	// Serializes the Data
 	// -------------------
