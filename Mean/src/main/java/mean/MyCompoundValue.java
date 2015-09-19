@@ -26,7 +26,7 @@ public class MyCompoundValue implements Writable{
 	// Constructor
 	// -----------
 	
-	private MyCompoundValue(){
+	public MyCompoundValue(){
 		total = 0;
 		count = 0;
 	}
@@ -35,6 +35,14 @@ public class MyCompoundValue implements Writable{
 	public MyCompoundValue(int total, int count){
 		this.total = total;
 		this.count = count;
+	}
+	
+	public void setTotal(int total){
+		this.total = total;
+	}
+	
+	public void setCount(int count){
+		this.count =count;
 	}
 	
 
