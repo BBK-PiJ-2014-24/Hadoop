@@ -17,7 +17,7 @@ import chainMaps.Map5;
 public class TestUtilities {
 
 	static List<Pair<LongWritable, Text>> getInput(){
-	    Scanner scanner = new Scanner(Map5.class.getResourceAsStream("input/wordcount-input.txt"));
+	    Scanner scanner = new Scanner(Map5.class.getResourceAsStream("src/test/resources/input.txt"));
 	    List<Pair<LongWritable, Text>> input = new ArrayList<Pair<LongWritable, Text>>();
 	    while(scanner.hasNext()){
 	        String line = scanner.nextLine();
@@ -28,7 +28,7 @@ public class TestUtilities {
 	}
 	 
 	private static int getInputLines(){
-	    Scanner scanner = new Scanner(Map5.class.getResourceAsStream("input/wordcount-input.txt"));
+	    Scanner scanner = new Scanner(Map5.class.getResourceAsStream("src/test/resources/input.txt"));
 	    int line = 0;
 	    while(scanner.hasNext()){
 	        scanner.nextLine();

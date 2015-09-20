@@ -7,9 +7,7 @@ import org.junit.*;
 import org.junit.Before;
 import org.junit.Assert.*;
 
-
-
-
+import aggregate.ConditionalWordCount_Mapper;
 
 public class MapperTest {
 
