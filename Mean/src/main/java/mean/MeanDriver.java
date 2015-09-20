@@ -24,11 +24,11 @@ public class MeanDriver {
     job.setJarByClass(MeanDriver.class);
     
     job.setMapperClass(MeanMapper.class);
-    job.setCombinerClass(MeanReducer.class);
+    job.setCombinerClass(MeanCombiner.class);
     job.setReducerClass(MeanReducer.class);
     
     job.setOutputKeyClass(Text.class);
-    job.setOutputValueClass(DoubleWritable.class);
+    job.setOutputValueClass(MyCompoundValue.class);
     
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
