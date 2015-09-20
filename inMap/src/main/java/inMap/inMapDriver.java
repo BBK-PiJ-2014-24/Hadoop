@@ -1,3 +1,9 @@
+/**
+ * With in-Mapping there is no need for combiner as already combining combiner functionality within
+ * the mapper as all opportunities for local aggregattion exhausted.
+ */
+
+
 package inMap;
 
 import java.io.IOException;
