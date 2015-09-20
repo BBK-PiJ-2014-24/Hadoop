@@ -31,7 +31,7 @@ public class Pair_Mapper extends Mapper<Object,Text,Text,IntWritable>{
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException{
 		
 		
-		StringTokenizer itr = new StringTokenizer(value.toString(),"\t");
+		StringTokenizer itr = new StringTokenizer(value.toString());
 	      
 	    while (itr.hasMoreTokens()){
 	    	String word = itr.nextToken();
