@@ -21,7 +21,7 @@ import org.apache.hadoop.mapreduce.lib.chain.*;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-import Aggregate.ConditionalWordCount_Reducer;
+import aggregate.ConditionalWordCount_Reducer;
 
 
 
@@ -77,12 +77,12 @@ public class Chain_Driver {
 	    					  Text.class, IntWritable.class, 
 	    					  map4Conf);
 	    
-	    Configuration reduce1Conf = new Configuration(false);
+	    Configuration reduce2Conf = new Configuration(false);
 	    //JobConf reduce1Conf = new JobConf(false);
-	    ChainReducer.setReducer(job, Reduce1.class,
+	    ChainReducer.setReducer(job, Reduce2.class,
 	    						Text.class, IntWritable.class,
 	    						Text.class, IntWritable.class,
-	    						reduce1Conf);
+	    						reduce2Conf);
 	    
 	    
 	 //   job.waitForCompletion(true);
