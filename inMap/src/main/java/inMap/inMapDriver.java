@@ -20,7 +20,7 @@ public class inMapDriver {
 	    Job job = Job.getInstance(conf, "in-Map word count");
 	    job.setJarByClass(inMapDriver.class);
 	    
-	    job.setMapperClass(inMapMapper.class);
+	    job.setMapperClass(inMapMapper2.class);
 	    //job.setCombinerClass(.class);
 	    job.setReducerClass(inMapReduce.class);
 	    
