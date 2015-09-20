@@ -47,7 +47,11 @@ public class Reduce2
 	    
 	    // CLEAN UP
 	    // --------
-	    // Clean Up happens when all the reduces are in
+	    // Clean Up happens when all the reduces are in. In effect, this is a 
+	    // "combiner" within a reducer. A stand alone combiner may not be called, so
+	    // to enforce one, it is built inside. See p44 of "Data-Intensive Text Processing
+	    // with MapReduce" Lin & Dyer. 
+	    // Also called " in-mapper combining" or 'local aggregation"
 	    // Tree is Revered so CORRECT Descending ORDER of TREE
 	    
 	    @Override
