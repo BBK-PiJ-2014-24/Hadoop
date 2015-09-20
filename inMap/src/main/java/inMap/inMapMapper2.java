@@ -1,6 +1,6 @@
 /**
  * Map that does the in-Mapping with a Hash-Map THAT IS PLACED IN THE CLEANUP. Since
- * Hadoop Preserves state, we can wait until the end to do the maps.
+ * Hadoop Preserves state, we can wait until the end to do the in-mapping.
  */
 
 package inMap;
