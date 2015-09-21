@@ -44,8 +44,8 @@ public class Stripe_Mapper extends Mapper<Object, Text, Text, MapWritable>{
 		    		Text w = new Text(coWord);
 		    		
 		    		if(mw.containsKey(w)){
-		    			int x = ((IntWritable)mw.get(w)).get();  // Convert to int before
-		    			mw.put(w, new IntWritable(x++));    // updating mapWritable
+		    			IntWritable count = (IntWritable)mw.get(w);  // Convert to int before
+		    			mw.put(w, new IntWritable(count.get()+ 1));    // updating mapWritable
 		    		}
 		    		else
 		    			mw.put(w,ONE);
