@@ -4,8 +4,6 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.hadoop.io.IntWritable;
@@ -42,11 +40,23 @@ public class MyMapWritable extends MapWritable{
 		return m.isEmpty();
 	}
 	
+	public boolean containsKey(Object key){
+		return m.containsKey(key);
+	}
+	
+	public boolean containsValue(Object value){
+		return m.containsValue(value);
+	}
+	
 	
 	public Set<Writable> keySet(){
 		return m.keySet();
 	}
 	
+	
+	public Writable get(Object key){
+		return m.get(key);
+	}
 	
 	public Collection<Writable> values(){
 		return m.values();
@@ -69,8 +79,6 @@ public class MyMapWritable extends MapWritable{
 		String s = "";
 		
 		Set<Writable> keys = m.keySet();
-	
-		
 		for(Writable key : keys){
 			s+= key.toString() + "\t" + m.get(key).toString() + "\n";
 		}
