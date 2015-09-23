@@ -17,17 +17,17 @@ import org.apache.hadoop.mapreduce.Mapper.Context;
 
 import utilities.MyCompoundValue;
 import utilities.MyMapWritable;
+import utilities.MyMapWritable2;
 import utilities.ParseUtilities;
 
-public class Stripe_Mapper extends Mapper<Object, Text, Text, MyMapWritable>{
+public class Stripe_Mapper extends Mapper<Object, Text, Text, MyMapWritable2>{
 
 
 	//Fields
 	// ------
 	
 	 private final static IntWritable ONE = new IntWritable(1);
-	// private Map<String, Integer> stripeMap = new HashMap<String, Integer>();
-	 private MyMapWritable mw = new MyMapWritable();  // The type is always Writable
+	 private MyMapWritable2 mw = new MyMapWritable2();  // The type is always Writable
 
 
 	// Map
@@ -54,11 +54,9 @@ public class Stripe_Mapper extends Mapper<Object, Text, Text, MyMapWritable>{
 		    		}
 		    		else
 		    			mw.put(w,ONE);
-		    	}	
-		    		
-		    	context.write(new Text("for"), mw);
-		    	   		   	
-		    }
+		    	}	// end if		    	   		   	
+		    } // end while
+		    context.write(new Text("for"), mw);
 		}	
 	
 	
