@@ -40,7 +40,7 @@ public class StripeMapperTest {
 				myMapper = new Stripe_Mapper();
 				mapDriver.setMapper(myMapper);
 				value = new Text("for go  for  rain For Spain\" for rain");
-				ans = "go\t1\nspain\t1\nrain\t2\n";
+				ans = "\ngo\t1\nspain\t1\nrain\t2";
 			}
 			
 			
