@@ -11,17 +11,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import utilities.MyMapWritable;
+import utilities.MyMapWritable2;
 
 public class MyMapWritable_Test {
 	
 	// Fields
 	// ------
-	MyMapWritable m;
+	MyMapWritable2 m;
 
 	
 		@Before
 		public void setUp(){
-			m = new MyMapWritable();
+			m = new MyMapWritable2();
 			m.put(new Text("world"), new IntWritable(3));
 			
 			m.put(new Text("hadoop"), new IntWritable(10));
