@@ -28,21 +28,7 @@ public class MyMapWritable extends MapWritable{
 		m.clear();
 	}
 	
-/*	public MyMapWritable(String s, int x){
-		//super();
-		Text word = new Text(s);
-		IntWritable count = new IntWritable(x);
-		m = new MapWritable();
-		m.put(word,count);
-	}
 	
-	public MyMapWritable(Text word, IntWritable count){
-		//super();
-		m = new MapWritable();
-		m.put(word,count);
-	}
-	
-*/		
 	public void put(Text word, IntWritable count){
 		m.put(word, count);
 	}
@@ -86,22 +72,8 @@ public class MyMapWritable extends MapWritable{
 	
 		
 		for(Writable key : keys){
-			s+= key.toString() + "\t" +m.get(key).toString() + "\n";
-			//System.out.println(s);
+			s+= key.toString() + "\t" + m.get(key).toString() + "\n";
 		}
-		
-		
-		
-	//	Iterator<java.util.Map.Entry<Writable, Writable>> it = m.entrySet().iterator();
-	//	while (it.hasNext()){
-		
-	//		s+= m.get(it.toString()).toString();
-	//	}
-		
-		
-		
-	//	Text t = new Text(s);
-	//	return t;
 		return s;
 	}
 
