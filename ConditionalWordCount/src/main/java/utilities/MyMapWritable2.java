@@ -19,7 +19,7 @@ public class MyMapWritable2 extends MapWritable {
 		
 		Set<Writable> keys = keySet();
 		for(Writable key : keys){
-			s+= key.toString() + "\t" + get(key).toString() + "\n";
+			s+= "\n" + key.toString() + "\t" + get(key).toString();
 		}
 		return s;
 	}
