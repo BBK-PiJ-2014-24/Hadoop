@@ -31,7 +31,8 @@ public class MyMapWritable_Test {
 			IntWritable x = new IntWritable(5);
 			m.put(t,x);
 		}
-		
+	// TESTS
+	// -----	
 		
 		@Test
 		public void testSize(){
