@@ -47,7 +47,7 @@ public class MyMapWritable_Test {
 		
 		@Test
 		public void testToString(){
-			String s = "world\t3\nhadoop\t10\nhi\t5\n";
+			String s = "\nworld\t3\nhadoop\t10\nhi\t5";
 			System.out.println(m.toString());
 			assertEquals("toString: ", s, m.toString());
 		}
