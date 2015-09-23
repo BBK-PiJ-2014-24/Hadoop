@@ -1,3 +1,7 @@
+/**
+ * Stripe Mapper. Output Value is MyMapWritable as need toString() for testing.
+ */
+
 package stripes;
 
 import java.io.IOException;
@@ -12,9 +16,10 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Mapper.Context;
 
 import utilities.MyCompoundValue;
+import utilities.MyMapWritable;
 import utilities.ParseUtilities;
 
-public class Stripe_Mapper extends Mapper<Object, Text, Text, MapWritable>{
+public class Stripe_Mapper extends Mapper<Object, Text, Text, MyMapWritable>{
 
 
 	//Fields
@@ -22,7 +27,7 @@ public class Stripe_Mapper extends Mapper<Object, Text, Text, MapWritable>{
 	
 	 private final static IntWritable ONE = new IntWritable(1);
 	// private Map<String, Integer> stripeMap = new HashMap<String, Integer>();
-	 private MapWritable mw = new MapWritable();  // The type is always Writable
+	 private MyMapWritable mw = new MyMapWritable();  // The type is always Writable
 
 
 	// Map
@@ -51,10 +56,6 @@ public class Stripe_Mapper extends Mapper<Object, Text, Text, MapWritable>{
 		    			mw.put(w,ONE);
 		    	}	
 		    		
-		    	//for(Map.Entry<String, Integer> entry : mp.entrySet()){
-		    	//	context.write(new Text("for "+ entry.getKey()),  );
-		    	//}
-		    	//Text wordPair = new Text(word + " " + coWord);
 		    	context.write(new Text("for"), mw);
 		    	   		   	
 		    }
