@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
 
-public class WordPair implements WritableComparable{
+public class WordPair implements WritableComparable<WordPair>{
 	
 	// Fields
 	// ------
@@ -68,8 +68,19 @@ public class WordPair implements WritableComparable{
 	// Compare
 	// -------
 	
-	public int compareTo(Object arg0) {
-		// TODO Auto-generated method stub
+	public int compareTo(WordPair other) {
+		
+		// check same left word
+		int sameFirst = this.left.toString().compareTo(other.left.toString());
+		if(sameFirst !=0)
+			return sameFirst;
+		
+	
+				
+		if(this.right.toString().equals("*"))		
+			return -1;
+		if(other.right.toString().equals("*"))
+			return 1;
 		return 0;
 	}
 
