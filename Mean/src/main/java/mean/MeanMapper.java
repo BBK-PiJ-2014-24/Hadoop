@@ -1,3 +1,7 @@
+/**
+ * Mean_Mapper is a Mapper for calc mean, using the compound value as a technique
+ */
+
 package mean;
 
 
