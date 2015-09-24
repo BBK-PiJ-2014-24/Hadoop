@@ -83,5 +83,10 @@ public class WordPair implements WritableComparable<WordPair>{
 			return 1;
 		return 0;
 	}
+	
+	
+	public String toString(){
+		return left.toString() + ", " + right.toString();
+	}
 
 }
