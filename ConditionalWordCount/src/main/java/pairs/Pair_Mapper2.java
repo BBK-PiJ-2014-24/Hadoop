@@ -12,17 +12,18 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Mapper.Context;
+import utilities.MyCompoundValue;
 
 import utilities.ParseUtilities;
+import utilities.WordPair;
 
-public class Pair_Mapper2 extends Mapper<Object,Text,Text,IntWritable>{
+public class Pair_Mapper2 extends Mapper<Object,Text,WordPair,IntWritable>{
 
 	
 	// Fields
 	// ------
 	private IntWritable ONE = new IntWritable(1);
-	
-	
+	private WordPair wordPair= new WordPair();
 	
 	// Map
 	// ---
@@ -32,6 +33,7 @@ public class Pair_Mapper2 extends Mapper<Object,Text,Text,IntWritable>{
 		
 		
 		StringTokenizer itr = new StringTokenizer(value.toString());
+		int marginalCount = 0;
 	      
 	    while (itr.hasMoreTokens()){
 	    	String word = itr.nextToken();
@@ -41,9 +43,14 @@ public class Pair_Mapper2 extends Mapper<Object,Text,Text,IntWritable>{
 	    		String coWord = itr.nextToken();
 	    		coWord = coWord.toLowerCase();
 	    		coWord = ParseUtilities.screenPunctuation(coWord);
-	    		Text wordPair = new Text(word + " " + coWord);
+	    		wordPair.set(word, coWord);
 	    		context.write(wordPair, ONE);
+	    		marginalCount++;
 	    	}   		   	
 	    }
+	    wordPair.set("for", "*");
+	    context.write(wordPair, new IntWritable(marginalCount)); // Send info for marginal count 
 	}	
+
+	
 }
