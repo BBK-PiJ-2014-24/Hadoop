@@ -79,9 +79,9 @@ public class WordPair implements WritableComparable<WordPair>{
 				
 		if(this.right.toString().equals("*"))		
 			return -1;
-		if(other.right.toString().equals("*"))
+		if(other.getRight().toString().equals("*"))
 			return 1;
-		return 0;
+		return this.right.compareTo(other.getRight());
 	}
 	
 	
