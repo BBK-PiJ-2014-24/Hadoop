@@ -1,7 +1,15 @@
+/**
+ * Reducer That Calcs the TopN of Conditional Probs
+ * 
+ * mw - Map of 
+ */
+
 package stripes;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
@@ -19,6 +27,8 @@ public class Stripe_Reducer3 extends Reducer<Text, MyMapWritable2, Text, MyMapWr
 	
 	private MyMapWritable2 result = new MyMapWritable2();
 	private IntWritable marginalCount = new IntWritable(0);
+	private TreeMap<IntWritable, Text> rankTree = new TreeMap<IntWritable, Text>(Collections.reverseOrder());
+	
 	
 	// Reduce
 	// ------
@@ -26,24 +36,19 @@ public class Stripe_Reducer3 extends Reducer<Text, MyMapWritable2, Text, MyMapWr
 		
 	result.clear();
 		
-		for(MyMapWritable2 val : value){
-			sumAll(val);
+		for(MyMapWritable2 stripe : value){
+			sumAll(stripe);
 		}
-		
-			//Text t = new Text(result.toString());
-			//System.out.println("\nHELLO\n");
-			//System.out.println(result.toString());
-			//context.write(key, result); //result;	
 	}
 	
 	
-	private void sumAll(MyMapWritable2 mw){
-		Set<Writable> keys = mw.keySet();  // get the set of keys so u can iterate MapW
+	private void sumAll(MyMapWritable2 stripe){
+		Set<Writable> keys = stripe.keySet();  // get the set of keys so u can iterate MapW
 										   // in actual fact, there is only 1 key in Set = for
 		
 		for(Writable key : keys){
 		
-			IntWritable moreCount = (IntWritable) mw.get(key); // get the new count update
+			IntWritable moreCount = (IntWritable) stripe.get(key); // get the new count update
 			
 			if(result.containsKey(key)){   //if results map already has key
 				IntWritable count = (IntWritable)result.get(key); // get exist count
