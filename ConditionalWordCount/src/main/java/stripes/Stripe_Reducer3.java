@@ -42,14 +42,14 @@ public class Stripe_Reducer3 extends Reducer<Text, MyMapWritable2, Text, DoubleW
 	// Sum Stripes
 	// -----------
 		for(MyMapWritable2 stripe : value){
-			sumAll(stripe); // stripe (co-word, count) Amends Field Variable, result
+			sumAll(stripe); // stripe (co-words, counts) Amends Field Variable, result
 		}
 	// Select only Top 3 Scores
 	// ------------------------	
 		Set<Writable> sumKeys = result.keySet();
 		for(Writable sumKey : sumKeys){
-			Text coWord = (Text) sumKey;
-			int x  = ((IntWritable)(result.get(sumKey))).get();
+			Text coWord = (Text) sumKey;  // co-word = key 
+			int x  = ((IntWritable)(result.get(sumKey))).get(); // count = value
 			
 			rankTree.put(x, coWord);
 			if (rankTree.size()>3)
