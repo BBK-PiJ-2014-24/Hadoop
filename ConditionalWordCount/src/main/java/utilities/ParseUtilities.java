@@ -47,12 +47,12 @@ public class ParseUtilities {
     	if(str.length() > 1)
     		end= str.length()-1 ;
     	else 
-    		end=str.length();
+    		return str;
     	
     	char c1 = str.charAt(0);
     	char c2 = str.charAt(end);
     	
-    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2))
+    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2) && str.length() > 2)
     		str = str.substring(1,end);
     	
     	else if(!Character.isAlphabetic(c1))
