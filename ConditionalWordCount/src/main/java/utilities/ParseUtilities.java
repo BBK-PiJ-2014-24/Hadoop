@@ -42,8 +42,13 @@ public class ParseUtilities {
     public static String screenPunctuation(String word){
     	
     	String str = word;
+    	int end;
     	
-    	int end= str.length()-1 ;
+    	if(str.length() > 1)
+    		end= str.length()-1 ;
+    	else 
+    		end=str.length();
+    	
     	char c1 = str.charAt(0);
     	char c2 = str.charAt(end);
     	
