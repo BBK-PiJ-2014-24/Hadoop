@@ -9,9 +9,10 @@ public enum NodeType {
 	
 	
 	// Enum List
-	NodeStructMass((byte) 0), // Node's PageRank Prob Mass + Adjancency List
-	NodeMass((byte) 1), // Node's PageRank prob Mass
-	NodeStructure((byte) 2); // Node's Adjancency Lsit
+	// ---------
+	Struct_ProbMass((byte) 0), // Node's PageRank Prob Mass + Adjancency List
+	ProbMass((byte) 1), // Node's PageRank prob Mass
+	Structure((byte) 2); // Node's Adjancency Lsit
 	
 	byte val;
 	
