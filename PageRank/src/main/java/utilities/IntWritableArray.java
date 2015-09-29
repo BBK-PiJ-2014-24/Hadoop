@@ -27,6 +27,16 @@ public class IntWritableArray extends ArrayWritable{
 	}
 */
 	
+	public int length(){
+		
+		int count = 0;
+		IntWritable[] arr = get();
+		for(IntWritable i : arr){
+			count++;
+		}
+		return count;
+	}
+	
 	
 	@Override
 	public String toString(){
@@ -34,7 +44,7 @@ public class IntWritableArray extends ArrayWritable{
 		String s = "";
 		IntWritable[] values = get();
 		for(IntWritable i : values){
-			s = Integer.toString(i.get());
+			s += Integer.toString(i.get()) + ", ";
 		}	
 		return s;
 	}
