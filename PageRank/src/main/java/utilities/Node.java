@@ -12,15 +12,18 @@ import org.apache.hadoop.io.Writable;
 
 public class Node implements Writable{
 	
-
-	
-	
 	private int nodeID;
-	private NodeType type;
+	private NodeType nodeType;
 	private float pageRank;
 	private  IntWritableArray adjList;
 	
+	// Fields
+	// ------
 	
+	// for helping with serialization
+	NodeType[] enumSerial = new NodeType[]{NodeType.Structure, 
+										   NodeType.ProbMass, 
+										   NodeType.AdjList};	
 
 	// constructor
 	// -----------
@@ -55,23 +58,54 @@ public class Node implements Writable{
 	}
 	
 	public void setNodeType(NodeType t){
-		this.type = t;
+		this.nodeType = t;
 	}
 	
 	public NodeType getNodeType(){
-		return type;
+		return nodeType;
 	}
 
-
+// Serialization/Deserialization
+// -----------------------------	
 	
 	public void readFields(DataInput in) throws IOException{
+		
+		
+		int enumCode = in.readByte();  // read in nodeType code for enum
+		nodeType = enumSerial[enumCode]; 
+		nodeID = in.readInt();
+		
+		
+		if(nodeType.equals(NodeType.ProbMass)){ 
+			pageRank = in.readFloat();
+			return;
+		}
+		
+		if(nodeType.equals(NodeType.Structure)){
+			pageRank = in.readFloat();
+		}
+		
 		this.adjList = new IntWritableArray();
 		adjList.readFields(in);
 	}
 
 	public void write(DataOutput out) throws IOException {
-		// TODO Auto-generated method stub
 		
+		byte enumCode = (byte) nodeType.getNodeTypeCode();
+		
+		out.writeByte(enumCode);  // NodeType
+		out.writeInt(nodeID);
+		
+		if(nodeType.equals(NodeType.ProbMass)){ 
+			out.writeFloat(pageRank);
+			return;
+		}
+		
+		if(nodeType.equals(NodeType.Structure)){
+			out.writeFloat(pageRank);
+		}
+		
+		adjList.write(out);
 	}
 	
 
