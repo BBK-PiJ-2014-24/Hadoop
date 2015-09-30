@@ -20,6 +20,10 @@ public enum NodeType {
 	private NodeType(byte v){
 		this.val = v;
 	}	
+	
+	public byte getNodeTypeCode(){
+		return val;
+	}
 
 }
 
