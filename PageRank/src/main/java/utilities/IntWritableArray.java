@@ -27,14 +27,14 @@ public class IntWritableArray extends ArrayWritable{
 	}
 */
 	
-	public int length(){
+	public IntWritable length(){
 		
 		int count = 0;
 		IntWritable[] arr = get();
 		for(IntWritable i : arr){
 			count++;
 		}
-		return count;
+		return new IntWritable(count);
 	}
 	
 	
