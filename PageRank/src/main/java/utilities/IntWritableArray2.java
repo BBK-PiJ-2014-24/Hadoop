@@ -26,7 +26,7 @@ public class IntWritableArray2  extends ArrayPrimitiveWritable {
 		this.arr = arr;
 	}
 	
-	public int lenth(){
+	public int length(){
 		return arr.length;
 	}
 	
