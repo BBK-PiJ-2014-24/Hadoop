@@ -122,7 +122,7 @@ public class Node implements Writable{
 		}
 		
 		if(adjList.length().get() > 0)
-			s += "AdjList: " + adjList.toString();
+			s += "\nAdjList: " + adjList.toString();
 		
 		return s;
 	}
