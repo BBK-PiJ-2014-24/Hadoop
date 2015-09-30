@@ -15,7 +15,7 @@ public class Node implements Writable{
 	private int nodeID;
 	private NodeType nodeType;
 	private float pageRank;
-	private  IntWritableArray adjList;
+	private  IntWritableArray2 adjList;
 	
 	// Fields
 	// ------
@@ -37,6 +37,10 @@ public class Node implements Writable{
 		this.nodeID = id;
 	}
 	
+	/**
+	 *  get NodeID
+	 * @return returns IntWritable (as it has to be a key in MR)
+	 */
 	public IntWritable getNodeID(){
 		return new IntWritable(this.nodeID);
 	}
@@ -49,11 +53,11 @@ public class Node implements Writable{
 		return this.pageRank;
 	}
 	
-	public void setAdjList(IntWritableArray arr){
+	public void setAdjList(IntWritableArray2 arr){
 		this.adjList = arr;
 	}
 	
-	public IntWritableArray getAdjList(){
+	public IntWritableArray2 getAdjList(){
 		return this.adjList;
 	}
 	
@@ -85,7 +89,7 @@ public class Node implements Writable{
 			pageRank = in.readFloat();
 		}
 		
-		this.adjList = new IntWritableArray();
+		this.adjList = new IntWritableArray2(500);
 		adjList.readFields(in);
 	}
 
@@ -121,7 +125,7 @@ public class Node implements Writable{
 			s += "\nPageRank: " + pageRank;
 		}
 		
-		if(adjList.length().get() > 0)
+		if(adjList.length() > 0)
 			s += "\nAdjList: " + adjList.toString();
 		
 		return s;
