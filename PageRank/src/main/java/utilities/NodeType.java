@@ -1,6 +1,7 @@
 /**
  * Enum Structure for Defining Type of Node. Whether a Node Carrying Prob 
- * Mass or Node's Structure (i.e. Adjancency List).
+ * Mass or Node's Adjancency List or entire structure. The Constructor is passed byte
+ * references to help with serializing the enum. 
  */
 
 package utilities;
@@ -10,9 +11,9 @@ public enum NodeType {
 	
 	// Enum List
 	// ---------
-	Struct_ProbMass((byte) 0), // Node's PageRank Prob Mass + Adjancency List
+	Structure((byte) 0), // Node's PageRank Prob Mass + Adjancency List
 	ProbMass((byte) 1), // Node's PageRank prob Mass
-	Structure((byte) 2); // Node's Adjancency Lsit
+	AdjList((byte) 2); // Node's Adjancency List
 	
 	byte val;
 	
