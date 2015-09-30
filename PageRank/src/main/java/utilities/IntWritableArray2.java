@@ -9,6 +9,7 @@ import org.apache.hadoop.io.ArrayPrimitiveWritable;
 public class IntWritableArray2  extends ArrayPrimitiveWritable {
 
 	private int[] arr;
+	private int size;
 	
 	public IntWritableArray2(int size){
 		this.arr = new int[size];
@@ -27,23 +28,30 @@ public class IntWritableArray2  extends ArrayPrimitiveWritable {
 	}
 	
 	public int length(){
-		return arr.length;
+		
+		this.size = arr.length;
+		return this.size;
+		
 	}
 	
 	
 	public void write(DataOutput out) throws IOException{
-		for(Integer i : arr){
-			out.writeInt(i);
+		
+		out.writeInt(this.size);
+		for(int i=0;i<size;i++){
+			out.writeInt(this.arr[i]);
 		}
+	//	this.write(out);
 	}
 	
 	
 	public void readin(DataInput in) throws IOException{
-		this.arr = new int[100];
-		int k=0;
-		for(Integer i : arr){
-			arr[k] = i;
-		}
+		
+		size = in.readInt();
+		this.arr = new int[size];
+		for(int i=0; i<size; i++){
+			this.arr[i] = in.readInt();
+		} 
 	}
 	
 	
