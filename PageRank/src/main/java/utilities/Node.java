@@ -89,8 +89,8 @@ public class Node implements Writable{
 			pageRank = in.readFloat();
 		}
 		
-		this.adjList = new IntWritableArray2(500);
-		adjList.readFields(in);
+		adjList.readin(in);
+		
 	}
 
 	public void write(DataOutput out) throws IOException {
