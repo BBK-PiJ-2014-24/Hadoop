@@ -11,10 +11,12 @@ import java.util.Arrays;
 
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.IntWritable;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import utilities.IntWritableArray;
+import utilities.IntWritableArray2;
 import utilities.Node;
 import utilities.NodeType;
 
@@ -22,25 +24,22 @@ public class NodeTests {
 
 
 	private Node node;
-	private IntWritableArray intArr;
-	private IntWritable[] arr;
+	private int[] intArr;
+	private IntWritableArray2 writArr;
 	
 	
 	@Before
 	public void setUp(){
-		intArr = new IntWritableArray();
+		intArr = new int[]{10,11,12};
 		
-		arr = new IntWritable[3];
-		arr[0] = new IntWritable(10);
-		arr[1] = new IntWritable(11);
-		arr[2] = new IntWritable(12);
-		intArr.set(arr);
+		
+		writArr = new IntWritableArray2(intArr);
 		
 		node = new Node();
 		node.setNodeID(101);
 		node.setNodeType(NodeType.Structure);
 		node.setPageRank(0.33f);
-		node.setAdjList(intArr);
+		node.setAdjList(writArr);
 		
 		
 	}
@@ -52,7 +51,7 @@ public class NodeTests {
 	public void test1(){
 		System.out.println("NodeID: " + node.getNodeID());
 
-		assertEquals("NodeID: ", node.getNodeID(), 101);
+		assertEquals("NodeID: ", node.getNodeID(), new IntWritable(101));
 		
 	}
 	/**
@@ -85,15 +84,11 @@ public class NodeTests {
 
   	@Test
 	public void test4(){
-		IntWritableArray nodeAdjList = node.getAdjList();
-		IntWritable[] nodeArray = nodeAdjList.get();
+		IntWritableArray2 nodeAdjList = node.getAdjList();
+		int[] nodeArray = nodeAdjList.get();
 		System.out.println("AdjList: ");
-		int k=0;
-		for(IntWritable i : arr){
-			assertTrue(Arrays.asList(nodeArray).contains(arr[k]));
-			System.out.println(arr[k]);
-			k++;
-		}
+		Assert.assertArrayEquals("Test AdjList Array", intArr, node.getAdjList().get());
+	
 	}
   	
   	
@@ -109,7 +104,7 @@ public class NodeTests {
 			System.out.println(arr[k]);
 			k++;
 		} */
-  		System.out.println("Test String!");
+  		System.out.println("\nTest String!");
   		
   		System.out.println(node.toString());
 	}
