@@ -37,8 +37,8 @@ public class Node implements Writable{
 		this.nodeID = id;
 	}
 	
-	public int getNodeID(){
-		return this.nodeID;
+	public IntWritable getNodeID(){
+		return new IntWritable(this.nodeID);
 	}
 	
 	public void setPageRank(float pr){
