@@ -65,8 +65,8 @@ public class Node implements Writable{
 		return nodeType;
 	}
 
-// Serialization/Deserialization
-// -----------------------------	
+	// Serialization/Deserialization
+	// -----------------------------	
 	
 	public void readFields(DataInput in) throws IOException{
 		
@@ -108,5 +108,22 @@ public class Node implements Writable{
 		adjList.write(out);
 	}
 	
-
+	@Override
+	public String toString(){
+		String s = "";
+		s += "NodeType: " + nodeType;
+		s += "\nNodeID: " + nodeID;
+		if(nodeType.equals(NodeType.ProbMass)){
+			s += "\nPageRank: " + pageRank;
+			return s;
+		}
+		if(nodeType.equals(NodeType.Structure)){
+			s += "\nPageRank: " + pageRank;
+		}
+		
+		if(adjList.length().get() > 0)
+			s += "AdjList: " + adjList.toString();
+		
+		return s;
+	}
 }
