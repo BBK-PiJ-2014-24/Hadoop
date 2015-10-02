@@ -18,7 +18,9 @@ public class IntArrayTests2  {
 
 	
 	private int[] intArray;
-	private IntWritableArray2 WritArr;
+	private int[] otherArray;
+	private IntWritableArray2 writArr;
+	private IntWritableArray2 otherWritArr;
 	
 	
 	@Before
@@ -27,26 +29,43 @@ public class IntArrayTests2  {
 		intArray[0] = 10;
 		intArray[1] = 11;
 		intArray[2] = 12;
-		WritArr = new IntWritableArray2(intArray);
+		writArr = new IntWritableArray2(intArray);	
 		
-		
+		otherArray = new int[]{50};
+		otherWritArr = new IntWritableArray2(otherArray);	
 		
 	}
 	
-	
+	/**
+	 * Test of toString() of elements in array
+	 */
 	@Test
 	public void test1(){
-		System.out.println(WritArr.toString());
+		System.out.println(writArr.toString());
 
-		Assert.assertEquals(WritArr.toString(),"10, 11, 12");
+		Assert.assertEquals(writArr.toString(),"10, 11, 12");
 	}
+	
+	/**
+	 * Test Correct Elements!
+	 */
 	
 	@Test
 	public void test2(){
-		Assert.assertEquals(intArray, WritArr.get());
+		Assert.assertEquals(intArray, writArr.get());
 	}
 	
 	
+	/*
+	 * Test compareTo()
+	 */
+	@Test
+	public void test3(){
+		
+		System.out.println("compareTo");
+		System.out.println(writArr.compareTo(otherWritArr));
+		
+	}
 	
 	
 	
