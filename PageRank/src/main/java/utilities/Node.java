@@ -7,6 +7,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
+import org.apache.hadoop.io.ArrayPrimitiveWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
 
@@ -15,7 +16,7 @@ public class Node implements Writable{
 	private int nodeID;
 	private NodeType nodeType;
 	private float pageRank;
-	private  IntWritableArray2 adjList;
+	private  int[] adjList;
 	
 	// Fields
 	// ------
@@ -53,11 +54,11 @@ public class Node implements Writable{
 		return this.pageRank;
 	}
 	
-	public void setAdjList(IntWritableArray2 arr){
+	public void setAdjList(int[] arr){
 		this.adjList = arr;
 	}
 	
-	public IntWritableArray2 getAdjList(){
+	public int[] getAdjList(){
 		return this.adjList;
 	}
 	
@@ -89,7 +90,9 @@ public class Node implements Writable{
 			pageRank = in.readFloat();
 		}
 		
-		adjList.readin(in);
+		ArrayPrimitiveWritable writAdjList = new ArrayPrimitiveWritable();
+		writAdjList.readFields(in);
+		adjList = (int[]) writAdjList.get();
 		
 	}
 
@@ -109,7 +112,10 @@ public class Node implements Writable{
 			out.writeFloat(pageRank);
 		}
 		
-		adjList.write(out);
+		ArrayPrimitiveWritable writAdjList = new ArrayPrimitiveWritable();
+		writAdjList.set(adjList);
+		writAdjList.write(out);
+	
 	}
 	
 	@Override
@@ -125,7 +131,7 @@ public class Node implements Writable{
 			s += "\nPageRank: " + pageRank;
 		}
 		
-		if(adjList.length() > 0)
+		if(adjList.length > 0)
 			s += "\nAdjList: " + adjList.toString();
 		
 		return s;
