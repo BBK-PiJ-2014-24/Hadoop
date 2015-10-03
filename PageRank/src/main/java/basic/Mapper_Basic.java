@@ -28,8 +28,8 @@ public class Mapper_Basic extends Mapper<IntWritable, Node, IntWritable, Node >{
 		
 		// Distribute Node's Prob Mass
 		
-		float probMass = node.getPageRank()/node.getAdjList().length();
-		int[] adjArr = node.getAdjList().get();
+		float probMass = node.getPageRank()/node.getAdjList().length;
+		int[] adjArr = node.getAdjList();
 		for(Integer i : adjArr){
 			Node n = new Node();
 			n.setNodeType(NodeType.ProbMass);
