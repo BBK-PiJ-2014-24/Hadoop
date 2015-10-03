@@ -18,12 +18,12 @@ public class Mapper_Basic extends Mapper<IntWritable, Node, IntWritable, Node >{
 		
 		
 		// Emit Node with NodeStructure
-		Node transitNode = new Node();
-		transitNode.setNodeType(NodeType.Structure);
-		transitNode.setNodeID(nodeID.get());
-		transitNode.setPageRank(node.getPageRank());
-		transitNode.setAdjList(node.getAdjList());
-		context.write(nodeID, transitNode);
+		Node structNode = new Node();
+		structNode.setNodeType(NodeType.Structure);
+		structNode.setNodeID(nodeID.get());
+		structNode.setPageRank(node.getPageRank());
+		structNode.setAdjList(node.getAdjList());
+		context.write(nodeID, structNode);
 		
 		
 		// Distribute Node's Prob Mass
@@ -36,7 +36,7 @@ public class Mapper_Basic extends Mapper<IntWritable, Node, IntWritable, Node >{
 			n.setNodeID(i);
 			n.setPageRank(probMass);
 			
-			context.write(n.getNodeID(),n);
+			context.write(new IntWritable(n.getNodeID()),n);
 		}	
 	}
 	
