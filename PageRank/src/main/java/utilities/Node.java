@@ -10,8 +10,9 @@ import java.io.IOException;
 import org.apache.hadoop.io.ArrayPrimitiveWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableComparable;
 
-public class Node implements Writable{
+public class Node implements WritableComparable<Node>{
 	
 	private int nodeID;
 	private NodeType nodeType;
@@ -42,8 +43,8 @@ public class Node implements Writable{
 	 *  get NodeID
 	 * @return returns IntWritable (as it has to be a key in MR)
 	 */
-	public IntWritable getNodeID(){
-		return new IntWritable(this.nodeID);
+	public int getNodeID(){
+		return nodeID;
 	}
 	
 	public void setPageRank(float pr){
@@ -136,4 +137,29 @@ public class Node implements Writable{
 		
 		return s;
 	}
+	
+	@Override
+	public int hashCode(){
+		
+		return nodeID * (adjList.length + 1);
+	}
+	
+	
+	@Override
+	public boolean equals(Object o){
+		Node other = (Node) o;
+		if(this.nodeID == other.getNodeID()) return true;
+		return false;
+	}
+
+
+	
+	//@Override
+	public int compareTo(Node n){
+		return this.nodeID - n.getNodeID(); 
+	}
+	
+	
+	
+	
 }
