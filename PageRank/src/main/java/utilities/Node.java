@@ -23,7 +23,7 @@ public class Node implements WritableComparable<Node>{
 	// ------
 	
 	// for helping with serialization
-	NodeType[] enumSerial = new NodeType[]{NodeType.Structure, 
+	NodeType[] enumSerial = new NodeType[]{NodeType.CompleteStructure, 
 										   NodeType.ProbMass, 
 										   NodeType.AdjList};	
 
@@ -87,7 +87,7 @@ public class Node implements WritableComparable<Node>{
 			return;
 		}
 		
-		if(nodeType.equals(NodeType.Structure)){
+		if(nodeType.equals(NodeType.CompleteStructure)){
 			pageRank = in.readFloat();
 		}
 		
@@ -109,7 +109,7 @@ public class Node implements WritableComparable<Node>{
 			return;
 		}
 		
-		if(nodeType.equals(NodeType.Structure)){
+		if(nodeType.equals(NodeType.CompleteStructure)){
 			out.writeFloat(pageRank);
 		}
 		
@@ -128,7 +128,7 @@ public class Node implements WritableComparable<Node>{
 			s += "\nPageRank: " + pageRank;
 			return s;
 		}
-		if(nodeType.equals(NodeType.Structure)){
+		if(nodeType.equals(NodeType.CompleteStructure)){
 			s += "\nPageRank: " + pageRank;
 		}
 		
