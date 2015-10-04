@@ -17,13 +17,12 @@ public class Mapper_Basic extends Mapper<IntWritable, Node, IntWritable, Node >{
 		
 		
 		
-		// Emit Node with NodeStructure
-		Node structNode = new Node();
-		structNode.setNodeType(NodeType.Structure);
-		structNode.setNodeID(nodeID.get());
-		structNode.setPageRank(node.getPageRank());
-		structNode.setAdjList(node.getAdjList());
-		context.write(nodeID, structNode);
+		// Emit Node with AdjList
+		Node nextRoundNode = new Node();
+		nextRoundNode.setNodeType(NodeType.AdjList);
+		nextRoundNode.setNodeID(nodeID.get());
+		nextRoundNode.setAdjList(node.getAdjList());
+		context.write(nodeID, nextRoundNode);
 		
 		
 		// Distribute Node's Prob Mass
