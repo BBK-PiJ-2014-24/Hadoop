@@ -11,7 +11,7 @@ public enum NodeType {
 	
 	// Enum List
 	// ---------
-	Structure((byte) 0), // Node's PageRank Prob Mass + Adjancency List
+	CompleteStructure((byte) 0), // Node's PageRank Prob Mass + Adjancency List
 	ProbMass((byte) 1), // Node's PageRank prob Mass
 	AdjList((byte) 2); // Node's Adjancency List
 	
