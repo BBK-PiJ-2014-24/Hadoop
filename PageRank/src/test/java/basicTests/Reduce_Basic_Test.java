@@ -104,10 +104,11 @@ public class Reduce_Basic_Test {
 		}
 		
 		@Test
-		public void reduceTest1(){
+		public void reduceTest1() throws IOException{
 			
 			reduceDriver.withInput(new IntWritable(101), nodeList);
 			reduceDriver.withOutput(new IntWritable(101), outputNode1);
+			reduceDriver.runTest();
 		}
 		
 		
