@@ -8,10 +8,12 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
 import org.junit.Before;
 import org.junit.Test;
 
 import basic.Mapper_Basic;
+import basic.Reduce_Basic;
 import utilities.IntWritableArray;
 import utilities.IntWritableArray2;
 import utilities.Node;
@@ -26,6 +28,10 @@ public class MapReduce_Basic_Test1 {
 		
 		MapDriver<IntWritable, Node, IntWritable, Node> mapDriver;
 		Mapper_Basic myMapper;
+		
+		ReduceDriver<IntWritable, Node, IntWritable, Node> reduceDriver;
+		Reduce_Basic myReducer;
+		
 		Node inputNode1;
 		Node inputNode2;
 		Node inputNode3;
@@ -48,8 +54,19 @@ public class MapReduce_Basic_Test1 {
 		Node outputNode5c;
 		Node outputNode5d;
 		
-		List inputNodeList;
-		List outputNodeList; 
+		
+		Node finalNode1;
+		Node finalNode2;
+		Node finalNode3;
+		Node finalNode4;
+		Node finalNode5;
+		
+		List<Node> mapNodeList1;
+		List<Node> mapNodeList2;
+		List<Node> mapNodeList3;
+		List<Node> mapNodeList4;
+		List<Node> mapNodeList5;
+		
 		
 		int[] intArr1;
 		int[] intArr2;
@@ -66,6 +83,12 @@ public class MapReduce_Basic_Test1 {
 			mapDriver = new MapDriver<IntWritable, Node, IntWritable, Node>();
 			myMapper = new Mapper_Basic();
 			mapDriver.setMapper(myMapper);
+			
+			reduceDriver = new ReduceDriver<IntWritable, Node, IntWritable, Node>();
+			myReducer = new Reduce_Basic();
+			reduceDriver.setReducer(myReducer);
+			
+			
 			
 			// Initial Node Inputs
 			// ------------------
@@ -188,35 +211,34 @@ public class MapReduce_Basic_Test1 {
 			outputNode5d.setNodeType(NodeType.ProbMass);
 			outputNode5d.setPageRank(0.066f);
 			
+			// Lists for the output of each MapNode to go into reduceDriver
+			//-------------------------------------------------------------
 			
+			mapNodeList1 = new ArrayList<Node>();
+				mapNodeList1.add(outputNode1a);
+				mapNodeList1.add(outputNode5b);
+				
+				
+			mapNodeList2 = new ArrayList<Node>();
+				mapNodeList2.add(outputNode1b);
+				mapNodeList2.add(outputNode2a);
+				mapNodeList2.add(outputNode5c);
 			
-			inputNodeList = new ArrayList<Node>();
-			inputNodeList.add(inputNode1);
-			inputNodeList.add(inputNode2);
-			inputNodeList.add(inputNode3);
-			inputNodeList.add(inputNode4);
-			inputNodeList.add(inputNode5);
+			mapNodeList3 = new ArrayList<Node>();
+				mapNodeList3.add(outputNode2b);
+				mapNodeList3.add(outputNode3a);
+				mapNodeList3.add(outputNode5d);
 			
-			outputNodeList = new ArrayList<Node>();
-				outputNodeList.add(outputNode1a);
-				outputNodeList.add(outputNode1b);
-				outputNodeList.add(outputNode1c);
-				outputNodeList.add(outputNode2a);
-				outputNodeList.add(outputNode2b);
-				outputNodeList.add(outputNode2c);
-				outputNodeList.add(outputNode3a);
-				outputNodeList.add(outputNode3b);
-				outputNodeList.add(outputNode4a);
-				outputNodeList.add(outputNode4b);
-				outputNodeList.add(outputNode5a);
-				outputNodeList.add(outputNode5b);
-				outputNodeList.add(outputNode5c);
-				outputNodeList.add(outputNode5d);
-			
-			
-			
-
-			
+			mapNodeList4 = new ArrayList<Node>();
+				mapNodeList4.add(outputNode1c);
+				mapNodeList4.add(outputNode3b);
+				mapNodeList4.add(outputNode4a);
+				
+			mapNodeList5 = new ArrayList<Node>();
+				mapNodeList5.add(outputNode2c);
+				mapNodeList5.add(outputNode4b);
+				mapNodeList5.add(outputNode5a);
+				
 		}
 		
 		
@@ -263,6 +285,70 @@ public class MapReduce_Basic_Test1 {
 			System.out.println("hello");
 			
 		}
+		
+		
+		/**
+		 * Tests for the Reduce Mode
+		 * @throws IOException
+		 */
+		
+		@Test
+		public void reduceTest1() throws IOException{
+			
+			
+			// Nodes Aftet the Reducer
+			// -----------------------
+			finalNode1 = new Node();
+			finalNode1.setNodeType(NodeType.CompleteStructure);
+			finalNode1.setNodeID(101);
+			finalNode1.setPageRank(0.066f);
+			finalNode1.setAdjList(intArr1);
+			
+			finalNode2 = new Node();
+			finalNode2.setNodeType(NodeType.CompleteStructure);
+			finalNode2.setNodeID(102);
+			finalNode2.setPageRank(0.166f);
+			finalNode2.setAdjList(intArr2);
+			
+			finalNode3 = new Node();
+			finalNode3.setNodeType(NodeType.CompleteStructure);
+			finalNode3.setNodeID(103);
+			finalNode3.setPageRank(0.166f);
+			finalNode3.setAdjList(intArr3);
+			
+			finalNode4 = new Node();
+			finalNode4.setNodeType(NodeType.CompleteStructure);
+			finalNode4.setNodeID(104);
+			finalNode4.setPageRank(0.3f);
+			finalNode4.setAdjList(intArr4);
+			
+			finalNode5 = new Node();
+			finalNode5.setNodeType(NodeType.CompleteStructure);
+			finalNode5.setNodeID(105);
+			finalNode5.setPageRank(0.3f);
+			finalNode5.setAdjList(intArr5);
+			
+			
+			
+			
+			
+			
+			reduceDriver.withInput(new IntWritable(101), mapNodeList1);
+			reduceDriver.withInput(new IntWritable(102), mapNodeList2);
+			reduceDriver.withInput(new IntWritable(103), mapNodeList3);
+			reduceDriver.withInput(new IntWritable(104), mapNodeList4);
+			reduceDriver.withInput(new IntWritable(105), mapNodeList5);
+	
+			
+			reduceDriver.withOutput(new IntWritable(101), finalNode1);
+			reduceDriver.withOutput(new IntWritable(102), finalNode2);
+			reduceDriver.withOutput(new IntWritable(103), finalNode3);
+			reduceDriver.withOutput(new IntWritable(104), finalNode4);
+			reduceDriver.withOutput(new IntWritable(105), finalNode5);
+			
+			reduceDriver.runTest();
+		}
+		
 		
 
 
