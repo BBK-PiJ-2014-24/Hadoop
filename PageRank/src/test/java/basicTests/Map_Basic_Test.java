@@ -117,9 +117,10 @@ public class Map_Basic_Test {
 	
 	/**
 	 * Test for NodeType.ProbMass
+	 * @throws IOException 
 	 */
 	
-	public void mapTest2(){
+	public void mapTest2() throws IOException{
 		
 		outputNode1b.setNodeType(NodeType.ProbMass);
 		outputNode1b.setNodeID(102);
@@ -127,6 +128,7 @@ public class Map_Basic_Test {
 		
 		mapDriver.withInput(new IntWritable(102),inputNode2);
 		mapDriver.withOutput(new IntWritable(102),outputNode1b);
+		mapDriver.runTest();
 	}
 	
 	
