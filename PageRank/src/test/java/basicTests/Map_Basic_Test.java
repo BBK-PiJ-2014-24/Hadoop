@@ -1,5 +1,6 @@
 /**
- * Tests Map_Basic
+ * Tests Map_Basic. Tests it can emit from a completeStructure Node a AdjList Node 
+ * and also emit a node's prob rank through to its adjList.
  */
 
 package basicTests;
@@ -29,13 +30,18 @@ public class Map_Basic_Test {
 	
 	MapDriver<IntWritable, Node, IntWritable, Node> mapDriver;
 	Mapper_Basic myMapper;
-	Node inputNode;
+	Node inputNode1;
+	Node inputNode2;
+	
 	Node outputNode1;
+	Node outputNode1b;
 	Node outputNode2;
 	Node outputNode3;
 	Node outputNode4;
 	Node outputNode5;
+	Node outputNode6;
 	int[] intArr;
+	int[] emptyIntArr;
 	IntWritableArray2 writArr;
 	
 	
@@ -47,29 +53,41 @@ public class Map_Basic_Test {
 		mapDriver.setMapper(myMapper);
 		
 		intArr = new int[]{105,106,107};
-		
+		emptyIntArr = new int[]{};
 	
-		inputNode = new Node();
-		inputNode.setNodeType(NodeType.Structure);
-		inputNode.setNodeID(101);
-		inputNode.setPageRank(0.33f);
-		inputNode.setAdjList(intArr);
+		inputNode1 = new Node();
+		inputNode1.setNodeType(NodeType.CompleteStructure);
+		inputNode1.setNodeID(101);
+		inputNode1.setPageRank(0.33f);
+		inputNode1.setAdjList(intArr);
+		
+		inputNode2 = new Node();
+		inputNode2.setNodeType(NodeType.ProbMass);
+		inputNode2.setNodeID(102);
+		inputNode2.setPageRank(0.33f);
+		inputNode2.setAdjList(emptyIntArr);
+			
 	
 		outputNode1 = new Node();
 		outputNode2 = new Node();
 		outputNode3 = new Node();
 		outputNode4 = new Node();
 		outputNode5 = new Node();
+		outputNode6 = new Node();
 		
 	}
 	
 	
-	
+	/**
+	 * Test Normal Map functions with NodeType.CompleteStructure
+	 * Node.adjList
+	 * @throws IOException
+	 */
 	
 	@Test
 	public void testMap() throws IOException{
 
-		outputNode1.setNodeType(NodeType.Structure);
+		outputNode1.setNodeType(NodeType.AdjList);
 		outputNode1.setNodeID(101);
 		outputNode1.setAdjList(intArr);
 		outputNode1.setPageRank(0.33f);
@@ -86,9 +104,7 @@ public class Map_Basic_Test {
 		outputNode4.setNodeID(107);
 		outputNode4.setPageRank(0.11f);
 		
-		
-		
-		mapDriver.withInput(new IntWritable(101),inputNode);
+		mapDriver.withInput(new IntWritable(101),inputNode1);
 		mapDriver.withOutput(new IntWritable(101),outputNode1);
 		mapDriver.withOutput(new IntWritable(105),outputNode2);
 		mapDriver.withOutput(new IntWritable(106),outputNode3);
@@ -97,6 +113,20 @@ public class Map_Basic_Test {
 		
 		System.out.println("hello");
 		
+	}
+	
+	/**
+	 * Test for NodeType.ProbMass
+	 */
+	
+	public void mapTest2(){
+		
+		outputNode1b.setNodeType(NodeType.ProbMass);
+		outputNode1b.setNodeID(102);
+		outputNode1b.setPageRank(0.33f);
+		
+		mapDriver.withInput(new IntWritable(102),inputNode2);
+		mapDriver.withOutput(new IntWritable(102),outputNode1b);
 	}
 	
 	
