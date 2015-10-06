@@ -14,7 +14,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import utilities.Node;
 import utilities.NodeType;
 
-public class Map_Reader extends Mapper<IntWritable, IntWritable, IntWritable, Node>{
+public class Map_Reader extends Mapper<IntWritable, IntWritable, IntWritable, IntWritable>{
 
 	// Fields
 	// ------
@@ -38,15 +38,25 @@ public class Map_Reader extends Mapper<IntWritable, IntWritable, IntWritable, No
 		
 		String line;
 		line=br.readLine();
+		
+		
         while (line != null){
-            System.out.println(line);
+        	char c = line.charAt(0);
+        	if(Character.isDigit(c)){  // check this is a line of data
+	        	String[] parts = line.split("\t");
+	     
+	            System.out.println(parts[0] +"\t\t\t"+ parts[1]);
+	            int id = Integer.parseInt(parts[0]);
+	            int edge = Integer.parseInt(parts[1]);
+	            context.write(new IntWritable(id), new IntWritable(edge));
+        	}
             line=br.readLine();
         }
         
         
 		
 		
-		context.write(key, n);
+		
 	}
 	
 }
