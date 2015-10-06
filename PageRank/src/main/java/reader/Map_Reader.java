@@ -16,18 +16,18 @@ import utilities.NodeType;
 
 public class Map_Reader extends Mapper<IntWritable, IntWritable, IntWritable, Node>{
 
+	// Fields
+	// ------
+	BufferedReader br;
+	
 	@Override
 	public void setup(Context context) throws IOException{
-        Path pt=new Path("./src/main/resources/soc-Epinions1.txt.gz");//Location of file in HDFS
+        Path pt=new Path("./src/main/resources/Sample.txt");//Location of file in HDFS
         FileSystem fs = FileSystem.get(new Configuration());
-        BufferedReader br=new BufferedReader(new InputStreamReader(fs.open(pt)));
-        String line;
-        line=br.readLine();
-        while (line != null){
-            System.out.println(line);
-            line=br.readLine();
-        }
-    }
+        br=new BufferedReader(new InputStreamReader(fs.open(pt)));
+        
+        
+    }  // soc-Epinions1.txt.gz
 	
 	@Override
 	public void map(IntWritable key, IntWritable values, Context context) throws IOException, InterruptedException{
@@ -35,6 +35,16 @@ public class Map_Reader extends Mapper<IntWritable, IntWritable, IntWritable, No
 		Node n = new Node();
 		n.setNodeType(NodeType.ProbMass);
 		n.setPageRank(0.33f);
+		
+		String line;
+		line=br.readLine();
+        while (line != null){
+            System.out.println(line);
+            line=br.readLine();
+        }
+        
+        
+		
 		
 		context.write(key, n);
 	}
