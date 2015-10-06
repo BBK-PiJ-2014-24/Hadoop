@@ -38,7 +38,7 @@ public class Node implements WritableComparable<Node>{
 	// constructor
 	// -----------
 	public Node(){
-		adjList = null;
+		
 	}
 	
 	// getter/setters
@@ -65,7 +65,7 @@ public class Node implements WritableComparable<Node>{
 	
 	public void setAdjList(int[] arr){
 		
-		if(adjList.equals(null) || adjList.length == 0)
+		if(adjList == null || adjList.length == 0)
 			this.adjList = arr;
 		else{
 			int[] combineArr = new int[adjList.length + arr.length];
@@ -150,7 +150,7 @@ public class Node implements WritableComparable<Node>{
 		}
 		
 		if(adjList.length > 0)
-			s += "\nAdjList: " + adjList.toString();
+			s += "\nAdjList: " + Arrays.toString(adjList);
 		
 		return s;
 	}
