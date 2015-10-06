@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
+import org.apache.hadoop.io.ArrayPrimitiveWritable;
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.junit.Assert;
@@ -25,21 +26,19 @@ public class NodeTests {
 
 	private Node node;
 	private int[] intArr;
-	private IntWritableArray2 writArr;
+	private ArrayPrimitiveWritable writArr;
 	
 	
 	@Before
 	public void setUp(){
 		intArr = new int[]{10,11,12};
-		
-		
-		writArr = new IntWritableArray2(intArr);
+	
 		
 		node = new Node();
 		node.setNodeID(101);
-		node.setNodeType(NodeType.Structure);
+		node.setNodeType(NodeType.CompleteStructure);
 		node.setPageRank(0.33f);
-		node.setAdjList(writArr);
+		node.setAdjList(intArr);
 		
 		
 	}
@@ -51,7 +50,7 @@ public class NodeTests {
 	public void test1(){
 		System.out.println("NodeID: " + node.getNodeID());
 
-		assertEquals("NodeID: ", node.getNodeID(), new IntWritable(101));
+		assertEquals("NodeID: ", node.getNodeID(), 101);
 		
 	}
 	/**
@@ -61,7 +60,7 @@ public class NodeTests {
 	public void test2(){
 		System.out.println("NodeType: " + node.getNodeType());
 
-		assertEquals("NodeID: ", node.getNodeType(), NodeType.Structure);
+		assertEquals("NodeID: ", node.getNodeType(), NodeType.CompleteStructure);
 		
 	}
 	
@@ -84,10 +83,9 @@ public class NodeTests {
 
   	@Test
 	public void test4(){
-		IntWritableArray2 nodeAdjList = node.getAdjList();
-		int[] nodeArray = nodeAdjList.get();
+		int[] nodeAdjList = node.getAdjList();
 		System.out.println("AdjList: ");
-		Assert.assertArrayEquals("Test AdjList Array", intArr, node.getAdjList().get());
+		Assert.assertArrayEquals("Test AdjList Array", intArr, nodeAdjList);
 	
 	}
   	
@@ -109,5 +107,20 @@ public class NodeTests {
   		System.out.println(node.toString());
 	}
 
+  	
+  	/**
+  	 * Test adding to AdjList
+  	 */
+  	
+  	@Test
+  	public void test6(){
+  		
+  		int[] x = new int[]{1,2,3}; 
+  		int [] ans = new int []{10,11,12,1,2,3};
+  		node.setAdjList(x);
+  		Assert.assertArrayEquals(ans,node.getAdjList());
+  	}
+  	
+  	
 	
 }
