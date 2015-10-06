@@ -6,21 +6,29 @@ package utilities;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.hadoop.io.ArrayPrimitiveWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.io.WritableComparable;
 
+
+
 public class Node implements WritableComparable<Node>{
+	
+	// Fields
+	// ------
 	
 	private int nodeID;
 	private NodeType nodeType;
 	private float pageRank;
 	private  int[] adjList;
 	
-	// Fields
-	// ------
+
 	
 	// for helping with serialization
 	NodeType[] enumSerial = new NodeType[]{NodeType.CompleteStructure, 
@@ -30,7 +38,7 @@ public class Node implements WritableComparable<Node>{
 	// constructor
 	// -----------
 	public Node(){
-		
+		adjList = null;
 	}
 	
 	// getter/setters
@@ -56,7 +64,16 @@ public class Node implements WritableComparable<Node>{
 	}
 	
 	public void setAdjList(int[] arr){
-		this.adjList = arr;
+		
+		if(adjList.equals(null) || adjList.length == 0)
+			this.adjList = arr;
+		else{
+			int[] combineArr = new int[adjList.length + arr.length];
+			System.arraycopy(adjList, 0, combineArr, 0, adjList.length);
+			System.arraycopy(arr, 0, combineArr, adjList.length, arr.length);
+			adjList = combineArr;
+		}
+			
 	}
 	
 	public int[] getAdjList(){
