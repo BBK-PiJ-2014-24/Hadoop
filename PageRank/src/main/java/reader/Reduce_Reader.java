@@ -2,6 +2,7 @@ package reader;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,42 +20,56 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 	private int totalCountOfEdges = 0;
 	List<Node> nodeList = new ArrayList<Node>();
 	
-	public void Reduce(IntWritable key, Iterable<IntWritable> values, Context context){
+
+	public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
 		
+		System.out.println("HELLO in");
 		Node n = new Node();
 		n.setNodeType(NodeType.CompleteStructure);
 		n.setNodeID(key.get());
 		
-		Iterator<IntWritable> it = values.iterator();  
-		if(it.hasNext()){					// check if node has any edges
 		
-			int size=0;
-			for(IntWritable i : values){   // find number of edges first
-				size++;
-			}
-			
-			int[] adjList = new int[size];  // instantiate int[]
-			
-			int k=0;
-			for(IntWritable i : values){  // populate
-				adjList[k] = i.get();
-				k++;
-			}
-			totalCountOfEdges += size;
-			n.setAdjList(adjList);  // set to Node
-			nodeList.add(n);   // add to Node List
+		int size=0;
+		ArrayList<IntWritable> cacheList = new ArrayList<IntWritable>();
+		for(IntWritable i : values){   // find number of edges first
+			size++;
+			IntWritable element = new IntWritable(i.get());
+			cacheList.add(element);
+			System.out.println(i.get());
 		}
+	
+		System.out.println("cacheList = " + cacheList.toString());
+		
+		int[] adjList = new int[size];  // instantiate int[]
+		int k=0;
+		for(IntWritable i : cacheList){
+			//System.out.println(i.get());
+			adjList[k] = i.get();
+			k++;
+		}
+
+		
+		totalCountOfEdges += size;
+		n.setAdjList(adjList);  // set to Node
+		nodeList.add(n);   // add to Node List
+		
+		//context.write(new IntWritable(n.getNodeID()), n);
+		
 	}
 		
 	@Override
 	protected void cleanup(Context context) throws IOException, InterruptedException{
-			
-		Float pageRank = (float) (1/totalCountOfEdges);
+		
+		
+		Float pageRank = (float) (1.0/totalCountOfEdges);
 		for(Node node : nodeList){
 			node.setPageRank(pageRank);
 			context.write(new IntWritable(node.getNodeID()), node);
+			System.out.println(node.toString());
 		}
+		
+		System.out.println("Total Edges = " + totalCountOfEdges);
 			
-	}
+	} 
 }
 
