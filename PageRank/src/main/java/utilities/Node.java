@@ -6,6 +6,8 @@ package utilities;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -146,7 +148,7 @@ public class Node implements WritableComparable<Node>{
 			return s;
 		}
 		if(nodeType.equals(NodeType.CompleteStructure)){
-			s += "\tPageRank: " + pageRank;
+			s += "\tPageRank: " + round(pageRank,4);
 		}
 		
 		if(adjList.length > 0)
@@ -175,6 +177,22 @@ public class Node implements WritableComparable<Node>{
 	public int compareTo(Node n){
 		return this.nodeID - n.getNodeID(); 
 	}
+	
+	
+	//round()
+	// ------
+	/**
+	* Rounds a double
+	* @param d - double 
+	* @param dp = dec places
+	* @return
+	*/
+		private float round(float num, int dp){
+			
+			BigDecimal bd = new BigDecimal(num);
+			bd = bd.setScale(dp, RoundingMode.HALF_UP);
+			return bd.floatValue();
+		}
 	
 	
 	
