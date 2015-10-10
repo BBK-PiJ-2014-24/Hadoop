@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -22,12 +23,14 @@ public static void main(String[] args) throws IOException, ClassNotFoundExceptio
 	    Job job = Job.getInstance(conf, "The Reader Driver");
 	    job.setJarByClass(Driver_Reader.class);
 	    
-	    job.setMapperClass(Map_Reader.class);
+	    job.setMapperClass(Map_Reader3.class);
 	    //job.setCombinerClass(Pair_Reducer.class);
 	    job.setReducerClass(Reduce_Reader.class);
 	    
+	    job.setMapOutputKeyClass(IntWritable.class);
+	    job.setOutputValueClass(IntWritable.class);
 	    job.setOutputKeyClass(IntWritable.class);
-	    job.setOutputValueClass(Node.class);
+	    job.setOutputValueClass(IntWritable.class);
 	    
 	    FileInputFormat.addInputPath(job, new Path(args[0]));
 	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
