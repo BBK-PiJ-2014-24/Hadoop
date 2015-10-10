@@ -1,6 +1,8 @@
 package reader;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -17,10 +19,10 @@ import utilities.NodeType;
 
 public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable, Node>{
 
-	private int totalCountOfEdges = 0;
+	private static int totalCountOfNodes = 0;
 	List<Node> nodeList = new ArrayList<Node>();
 	
-
+	@Override
 	public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
 		
 		System.out.println("HELLO in");
@@ -35,7 +37,7 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 			size++;
 			IntWritable element = new IntWritable(i.get());
 			cacheList.add(element);
-			System.out.println(i.get());
+			//System.out.println(i.get());
 		}
 	
 		System.out.println("cacheList = " + cacheList.toString());
@@ -49,7 +51,7 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 		}
 
 		
-		totalCountOfEdges += size;
+		totalCountOfNodes += 1;
 		n.setAdjList(adjList);  // set to Node
 		nodeList.add(n);   // add to Node List
 		
@@ -61,15 +63,15 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 	protected void cleanup(Context context) throws IOException, InterruptedException{
 		
 		
-		Float pageRank = (float) (1.0/totalCountOfEdges);
+		Float pageRank = (float) (1.0/totalCountOfNodes);
 		for(Node node : nodeList){
 			node.setPageRank(pageRank);
 			context.write(new IntWritable(node.getNodeID()), node);
 			System.out.println(node.toString());
 		}
 		
-		System.out.println("Total Edges = " + totalCountOfEdges);
+		System.out.println("Total Edges = " + totalCountOfNodes);
 			
-	} 
+	} 	
 }
 
