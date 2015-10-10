@@ -139,18 +139,18 @@ public class Node implements WritableComparable<Node>{
 	@Override
 	public String toString(){
 		String s = "";
-		s += "NodeType: " + nodeType;
-		s += "\nNodeID: " + nodeID;
+		//s += "NodeType: " + nodeType;
+		//s += "\nNodeID: " + nodeID;
 		if(nodeType.equals(NodeType.ProbMass)){
-			s += "\nPageRank: " + pageRank;
+			s += "\tPageRank: " + pageRank;
 			return s;
 		}
 		if(nodeType.equals(NodeType.CompleteStructure)){
-			s += "\nPageRank: " + pageRank;
+			s += "\tPageRank: " + pageRank;
 		}
 		
 		if(adjList.length > 0)
-			s += "\nAdjList: " + Arrays.toString(adjList);
+			s += "\tAdjList: " + Arrays.toString(adjList);
 		
 		return s;
 	}
