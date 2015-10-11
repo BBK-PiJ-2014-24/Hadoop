@@ -62,7 +62,6 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 	@Override
 	protected void cleanup(Context context) throws IOException, InterruptedException{
 		
-		
 		Float pageRank = (float) (1.0/totalCountOfNodes);
 		for(Node node : nodeList){
 			node.setPageRank(pageRank);
@@ -70,7 +69,7 @@ public class Reduce_Reader extends Reducer<IntWritable, IntWritable, IntWritable
 			System.out.println(node.toString());
 		}
 		
-		System.out.println("Total Edges = " + totalCountOfNodes);
+		System.out.println("Total Nodes = " + totalCountOfNodes);
 			
 	} 	
 }
