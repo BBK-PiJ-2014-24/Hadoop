@@ -143,17 +143,20 @@ public class Node implements WritableComparable<Node>{
 		String s = "";
 		//s += "NodeType: " + nodeType;
 		//s += "\nNodeID: " + nodeID;
+		s+= nodeID + "\t";
 		if(nodeType.equals(NodeType.ProbMass)){
-			s += "\tPageRank: " + pageRank;
+			//s += "\tPageRank: " + pageRank;
+			s += round(pageRank,12) + "\t";
 			return s;
 		}
 		if(nodeType.equals(NodeType.CompleteStructure)){
-			s += "\tPageRank: " + round(pageRank,4);
+			//s += "\tPageRank: " + round(pageRank,12);
+			s += round(pageRank,12) + "\t";
 		}
 		
 		if(adjList.length > 0)
-			s += "\tAdjList: " + Arrays.toString(adjList);
-		
+			//s += "\tAdjList: " + Arrays.toString(adjList);
+			s+= Arrays.toString(adjList);
 		return s;
 	}
 	
@@ -175,7 +178,29 @@ public class Node implements WritableComparable<Node>{
 	
 	//@Override
 	public int compareTo(Node n){
-		return this.nodeID - n.getNodeID(); 
+		int cmp1 = this.nodeID - n.getNodeID(); 
+		if(cmp1 != 0){
+			return cmp1;
+		}
+		
+		int cmp2 = this.adjList.length - n.adjList.length;
+		if( cmp2 != 0)
+			return cmp2;
+		
+		int sum1 = 0;
+		for(Integer i : this.adjList){
+			sum1+= i;
+		}
+		
+		int sum2 = 0;
+		for(Integer i : n.adjList){
+			sum2+= i;
+		}
+		
+		
+		return sum1 - sum2;
+		
+			
 	}
 	
 	
