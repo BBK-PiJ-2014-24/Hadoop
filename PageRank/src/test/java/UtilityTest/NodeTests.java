@@ -18,8 +18,8 @@ import org.junit.Test;
 
 import utilities.IntWritableArray;
 import utilities.IntWritableArray2;
-import utilities.Node;
-import utilities.NodeType;
+import chain.Node;
+import chain.NodeType;
 
 public class NodeTests {
 
@@ -27,6 +27,7 @@ public class NodeTests {
 	private Node node;
 	private int[] intArr;
 	private ArrayPrimitiveWritable writArr;
+	private String s;
 	
 	
 	@Before
@@ -40,6 +41,7 @@ public class NodeTests {
 		node.setPageRank(0.33f);
 		node.setAdjList(intArr);
 		
+		s = "CompleteStructure\t101\t0.33\t[10,11,12]";
 		
 	}
 	
@@ -121,6 +123,16 @@ public class NodeTests {
   		Assert.assertArrayEquals(ans,node.getAdjList());
   	}
   	
+  	/**
+  	 * Test create() method.
+  	 */
   	
+  	@Test
+  	public void test7(){
+  		System.out.println("\nCREATE");
+  		Node n1 = Node.create(s);
+  		System.out.println(n1.toString());
+  		Assert.assertTrue(n1.equals(node));
+  	}
 	
 }
