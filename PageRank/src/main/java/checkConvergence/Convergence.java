@@ -17,8 +17,9 @@ public class Convergence {
 		BufferedReader newBr = null;
 		FileReader oldFr = null;
 		FileReader newFr = null;
-		float epsilon = 0.000001f;
+		float epsilon = 0.001f;
 		
+		System.out.println("+++++CHECK CONVERGENCE ++++++++++");
 		
 		try{
 			oldFr = new FileReader(oldFile);
@@ -36,7 +37,7 @@ public class Convergence {
 				String[] oldElements = lineOld.split("\t");
 				String[] newElements = lineNew.split("\t");
 				
-				System.out.println(oldElements[3]+"\t"+newElements[3]);
+				//System.out.println(oldElements[3]+"\t"+newElements[3]);
 				
 				float oldPr = Float.parseFloat(oldElements[3]);
 				float newPr = Float.parseFloat(newElements[3]);
@@ -44,9 +45,10 @@ public class Convergence {
 				
 				float delta = Math.abs(newPr - oldPr);
 				System.out.println("delta = " + delta);
-				if(delta > epsilon)
+				if(delta > epsilon){
 					System.out.println("false");
 					return false; // Convergence Test Failed
+				}
 			}
 		}
 		catch(Exception ex1){System.out.println("File Not Found Exception Error");}
@@ -60,6 +62,7 @@ public class Convergence {
 			}
 		}
 		
+		System.out.println("++++++ CONVERGED !!!!");
 		return true;  // Convergence Test Passed
 	}
 	
