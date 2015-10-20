@@ -5,6 +5,7 @@
 
 package chain;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
@@ -17,13 +18,15 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+import checkConvergence.Convergence;
+
 public class Driver_Chain4 extends Configured implements Tool {
 
 	
 	public static void main(String[] args) throws Exception{
 		//Driver_Basic_Chain2.job1();
 		//Driver_Basic_Chain2.job2();
-		ToolRunner.run(new Configuration(), new Driver_Chain3(), args);
+		ToolRunner.run(new Configuration(), new Driver_Chain4(), args);
 	}
 	
 	
@@ -43,7 +46,7 @@ public class Driver_Chain4 extends Configured implements Tool {
 		// READER
 		Configuration conf1 = new Configuration();
 		Job job1 = Job.getInstance(conf1, "The Reader Driver");
-		job1.setJarByClass(Driver_Chain3.class);
+		job1.setJarByClass(Driver_Chain4.class);
 
 		job1.setMapperClass(Map_Reader3.class);
 		//job.setCombinerClass(Pair_Reducer.class);
@@ -61,14 +64,16 @@ public class Driver_Chain4 extends Configured implements Tool {
 		
 		String prefix = "./target/job";
 		String suffix = "_Output";
-		
+		boolean isConverged = false;
+		int i = 0;
 		
 		// BASIC
 		//---------
-		for(int i=1; i < 4; i++){
+		while(!isConverged){
+			
 			Configuration conf2 = new Configuration();
 			Job job2 = Job.getInstance(conf2, "PageRank_Basic");
-			job2.setJarByClass(Driver_Chain3.class);
+			job2.setJarByClass(Driver_Chain4.class);
 
 			job2.setMapperClass(Mapper_Basic3.class);
 			//job.setCombinerClass(Pair_Reducer.class);
@@ -81,8 +86,10 @@ public class Driver_Chain4 extends Configured implements Tool {
 			job2.setOutputValueClass(Node.class);		   // Basic Reducer Output Value	
 
 			//job2.setInputFormatClass(KeyValueTextInputFormat.class);
+			i++;
 			String inputPath=prefix+i+suffix;
 			String outputPath=prefix+(i+1)+suffix;
+			String fileName = "/part-r-00000";
 
 			FileInputFormat.addInputPath(job2, new Path(inputPath));
 			FileOutputFormat.setOutputPath(job2, new Path(outputPath));
@@ -90,15 +97,21 @@ public class Driver_Chain4 extends Configured implements Tool {
 			System.out.println("+++++++ITERATIONS: " + i);
 			job2.waitForCompletion(true);
 			
+			File fileIn = new File(inputPath+fileName);
+			File fileOut = new File(outputPath+fileName);
+			
+			isConverged = Convergence.check(fileIn,fileOut);   // check for PageRank Convergence
 		}
 		
 		
 		// topN
 		//-----
 		
+		System.out.println("++++++++++++++ Start topN ++++ i = " + i );
+		i++;
 		Configuration conf3 = new Configuration();
 		Job job3 = Job.getInstance(conf3, "PageRank_Basic");
-		job3.setJarByClass(Driver_Chain3.class);
+		job3.setJarByClass(Driver_Chain4.class);
 
 		job3.setMapperClass(topN_Mapper.class);
 		//job.setCombinerClass(Pair_Reducer.class);
@@ -111,7 +124,7 @@ public class Driver_Chain4 extends Configured implements Tool {
 		job3.setOutputValueClass(Node.class);		   // Basic Reducer Output Value	
 
 		//job2.setInputFormatClass(KeyValueTextInputFormat.class);
-		int i = 4;
+		
 		String inputPath=prefix+i+suffix;
 		String outputPath=prefix+(i+1)+suffix;
 
