@@ -76,7 +76,7 @@ public class Driver_Chain4 extends Configured implements Tool {
 			job2.setJarByClass(Driver_Chain4.class);
 
 			job2.setMapperClass(Mapper_Basic3.class);
-			//job.setCombinerClass(Pair_Reducer.class);
+			job2.setCombinerClass(Combiner_Basic.class);
 			job2.setReducerClass(Reduce_Basic.class);
 
 
