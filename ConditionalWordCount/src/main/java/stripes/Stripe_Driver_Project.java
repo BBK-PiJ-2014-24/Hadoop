@@ -35,11 +35,14 @@ public class Stripe_Driver_Project {
 	    
 	    //job.setOutputFormatClass(TextOutputFormat.class);
 	    
-	    Path inputFolder = new Path("./src/main/resources/JaneAusten/");
-	    Path outputFolder = new Path("./target/JaneAusten/");
+	   // Path inputFolder = new Path("./src/main/resources/JaneAusten/");
+	    //Path outputFolder = new Path("./target/JaneAusten/");
 	    
-	    FileInputFormat.addInputPath(job, inputFolder);
-	    FileOutputFormat.setOutputPath(job, outputFolder);
+	    FileInputFormat.addInputPath(job, new Path(args[0]));
+	    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+	    
+	    //FileInputFormat.addInputPath(job, inputFolder);
+	    //FileOutputFormat.setOutputPath(job, outputFolder);
 	    
 	    System.exit(job.waitForCompletion(true) ? 0 : 1);
 		
