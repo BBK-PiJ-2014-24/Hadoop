@@ -34,21 +34,24 @@ public class Pair_Mapper2 extends Mapper<Object,Text,WordPair,IntWritable>{
 		
 		StringTokenizer itr = new StringTokenizer(value.toString());
 		int marginalCount = 0;
+		String targetWord = "every";
 	      
 	    while (itr.hasMoreTokens()){
 	    	String word = itr.nextToken();
 	    	word = word.toLowerCase();
 	    	word = ParseUtilities.screenPunctuation(word);
-	    	if(word.equals("for") && itr.hasMoreTokens()){
+	    	if(word.equals(targetWord) && itr.hasMoreTokens()){
 	    		String coWord = itr.nextToken();
 	    		coWord = coWord.toLowerCase();
 	    		coWord = ParseUtilities.screenPunctuation(coWord);
+	    		System.out.println("MAPPER coWord: " + coWord);
 	    		wordPair.set(word, coWord);
 	    		context.write(wordPair, ONE);
 	    		marginalCount++;
 	    	}   		   	
 	    }
-	    wordPair.set("for", "*");
+	    wordPair.set(targetWord, "*");
+	    System.out.println("MARGINAL *");
 	    context.write(wordPair, new IntWritable(marginalCount)); // Send info for marginal count 
 	}	
 
