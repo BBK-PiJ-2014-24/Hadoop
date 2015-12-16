@@ -50,9 +50,10 @@ public class Stripe_Reducer3 extends Reducer<Text, MyMapWritable2, Text, DoubleW
 		for(Writable sumKey : sumKeys){
 			Text coWord = (Text) sumKey;  // co-word = key 
 			int x  = ((IntWritable)(result.get(sumKey))).get(); // count = value
-			
+			if(rankTree.containsKey(x))
+				x += 0.000001; // hack as treeMap cannot take same value keys
 			rankTree.put(x, coWord);
-			if (rankTree.size()>3)
+			if (rankTree.size()>10)
 	    		rankTree.remove(rankTree.lastKey());    // push out the lowest count
 		}	
 	}
@@ -69,12 +70,17 @@ public class Stripe_Reducer3 extends Reducer<Text, MyMapWritable2, Text, DoubleW
 			
 			if(result.containsKey(key)){   //if results map already has co-word in key
 				IntWritable count = (IntWritable)result.get(key); // get exist count
+				System.out.println("\nsumAll - before Update: " + key.toString() + "\t"   + count.get() + "\tIncrease Count: " + moreCount.get() );
 				count.set(count.get() + moreCount.get());  // combine the two together.
+				System.out.println("sumAll - after Update: " + key.toString() + "\t"   + count.get());
 			}
 			else{
 				result.put(key, moreCount);
+				System.out.println("\nsumAll - new UPdate: " + key.toString() + "\t"   + moreCount.get());
 			}
+			System.out.println("sumAll - MARGINAL BEfore: " + marginalCount.get() + "\tincrease: " + moreCount.get() );
 			marginalCount.set(marginalCount.get() + moreCount.get());
+			System.out.println("sumAll - MARGINAL After: " + marginalCount.get());
 		}  // end for
 	}  // end sumAll
 	
