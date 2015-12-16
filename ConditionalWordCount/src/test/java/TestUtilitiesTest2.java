@@ -47,6 +47,29 @@ public class TestUtilitiesTest2 extends TestUtilities {
 	@Test
 	public void test2() {
 		
+		
+		
+		assertEquals(ParseUtilities.screenPunctuation("us"), "us");
+		assertEquals(ParseUtilities.screenPunctuation("us!"), "us");
+		assertEquals(ParseUtilities.screenPunctuation("us."), "us");
+		assertEquals(ParseUtilities.screenPunctuation("us_"), "us");
+		assertEquals(ParseUtilities.screenPunctuation("'us"), "us");
+		assertEquals(ParseUtilities.screenPunctuation("\"us\""), "us");
+
+
+		ParseUtilities.screenPunctuation("us--");
+		System.out.println(ParseUtilities.screenPunctuation("us--a"));
+		assertEquals(ParseUtilities.screenPunctuation("us--a"), "us");
+		System.out.println(ParseUtilities.screenPunctuation("us--"));
+		assertEquals(ParseUtilities.screenPunctuation("us--"), "us");
+		
+		
+	}
+	
+	
+	@Test
+	public void test3() {
+		
 		System.out.println( ParseUtilities.screenPunctuation(new Text("hello")));
 		assertEquals(ParseUtilities.screenPunctuation(new Text("hello")), new Text("hello"));
 		assertEquals(ParseUtilities.screenPunctuation(new Text("hello!")), new Text("hello"));
@@ -60,6 +83,14 @@ public class TestUtilitiesTest2 extends TestUtilities {
 	}
 	
 	
-	
+	@Test 
+	public void test4(){
+		assertEquals(ParseUtilities.screenStem("it's"),"it");
+		assertEquals(ParseUtilities.screenStem("women's"),"women");
+		assertEquals(ParseUtilities.screenStem("orderly"),"order");
+		assertEquals(ParseUtilities.screenStem("bucking"),"buck");
+		assertEquals(ParseUtilities.screenStem("bucked"),"buck");
+		
+	}
 	
 }
