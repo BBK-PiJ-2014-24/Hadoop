@@ -42,8 +42,11 @@ public class ParseUtilities {
        	for(int i=0;i<end;i++){				// Screen for  --
     		if(str.charAt(i) == '-' && str.charAt(i+1) == '-'){
     			str = str.substring(0,i);
-    			end = str.length()-1 ;   // re-set end index 
-    			break;
+    			end = str.length()-1 ;   // re-set end index
+    			if(end > 0)
+    				break;
+    			else
+    				return str;   // single letter
     		}
     	}	
     	
@@ -74,29 +77,30 @@ public class ParseUtilities {
      * @param word
      * @return
      */
-    public static Text screenStem(Text word){
+    public static String screenStem(String str){
     	
-    	String str = word.toString();
     	int end = str.length()-1;
+    	
+    	if(end+1 > 2  && str.charAt(end-1) == '\''){   // check for possessive noun
+    		str = str.substring(0, end-1);
+    		end = str.length()-1;
+    	}
   
     	if(end+1 > 3){
 	    	// -ing screen with min word length to avoid r-ing, 
 	    	if(str.substring(end-2).equals("ing") && end+1 > 5){
 	    		str = str.substring(0,end-2);
-	    		word.set(str);
 	    	}
 	    	else if(str.substring(end-1).equals("ed")){
 	    		str = str.substring(0,end-1);
-	    		word.set(str);
-	    	}
+	  	    	}
 	    	// -ly screen with min word length to avoid f-ly
 	    	else if(str.substring(end-1).equals("ly")){
 	    		str = str.substring(0,end-1);
-	    		word.set(str);
 	    	}
     	}
     	
-    	return word;
+    	return str;
     }
 
 	
