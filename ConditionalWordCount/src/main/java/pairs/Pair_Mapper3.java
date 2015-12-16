@@ -40,6 +40,7 @@ public class Pair_Mapper3 extends Mapper<Object,Text,WordPair,IntWritable>{
 	    	String word = itr.nextToken();
 	    	word = word.toLowerCase();
 	    	word = ParseUtilities.screenPunctuation(word);
+	    	word = ParseUtilities.screenStem(word);
 	    	if(word.equals(targetWord) && itr.hasMoreTokens()){
 	    		String coWord = itr.nextToken();
 	    		System.out.println("MAPPER3 START coWord: " + coWord);
