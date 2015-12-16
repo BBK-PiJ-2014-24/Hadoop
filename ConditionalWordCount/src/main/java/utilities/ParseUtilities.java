@@ -21,22 +21,9 @@ public class ParseUtilities {
     public static Text screenPunctuation(Text word){
     	
     	String str = word.toString();
-    	int end= str.length()-1 ;
-    	char c1 = str.charAt(0);
-    	char c2 = str.charAt(end);
-    	
-    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2))
-    		str = str.substring(1,end);
-    	
-    	else if(!Character.isAlphabetic(c1))
-    		str = str.substring(1);
-    	
-    	else if(!Character.isAlphabetic(c2))
-    		str = str.substring(0,end); 
-    	
-    	word.set(str);
-    	
-    	return word;
+    	String cleanString = screenPunctuation(str);
+    	Text cleanText = new Text(cleanString);	
+    	return cleanText;
     }
 
     public static String screenPunctuation(String word){
@@ -44,25 +31,38 @@ public class ParseUtilities {
     	String str = word;
     	int end;
     	
-    	if(str.length() > 1)
-    		end= str.length()-1 ;
-    	else 
-    		return str;
     	
+    	if(str.length() > 1){
+    		end = str.length()-1 ;   // set end index
+    	}
+    	else 
+    		return str;         	// single letter
+    	
+    	
+       	for(int i=0;i<end;i++){				// Screen for  --
+    		if(str.charAt(i) == '-' && str.charAt(i+1) == '-'){
+    			str = str.substring(0,i);
+    			end = str.length()-1 ;   // re-set end index 
+    			break;
+    		}
+    	}	
+    	
+       	
+       	
     	char c1 = str.charAt(0);
     	char c2 = str.charAt(end);
     	
-    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2) && str.length() > 2)
+    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2) && str.length() > 2)  // Double apostrophe
     		str = str.substring(1,end);
     	
-    	else if(!Character.isAlphabetic(c1))
+    	else if(!Character.isAlphabetic(c1))   // Single Quote
     		str = str.substring(1);
     	
-    	else if(!Character.isAlphabetic(c2))
+    	else if(!Character.isAlphabetic(c2))   // Punctuation
     		str = str.substring(0,end); 
     	
-    	
-    	
+
+
     	return str;
     }    
     
