@@ -37,16 +37,20 @@ public class Pair_Reducer3 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 		
 		// find the (for,*) first to calc marginalCount FIRST 
 		if(key.getRight().equals(star)){
+			//System.out.println("\n**** before marginal count: " + marginalCount.get());
 			marginalCount.set(marginalCount.get() + calcSum(values));
-			System.out.println("**** " + marginalCount.get());
+			//System.out.println("**** after marginal count" + marginalCount.get() + "\tincrement: " + calcSum(values));
 		}
 		else{
 			int count = calcSum(values);  // calc Total Count
 			double freq = (count*1.0)/marginalCount.get();  // calc conditional prob
-			freq = round(freq,4);
+			freq = round(freq,6);
 			String wordPair = key.toString();
+			if(rankTree.containsKey(freq))
+				freq = freq + 0.000001; // hack as treeMap cannot take same value keys
 			rankTree.put(freq, wordPair);
 			System.out.println("******" + wordPair + ", " + freq);
+			//System.out.println("++++ Size of Tree: " + rankTree.size());
 			if (rankTree.size()>10)
 	    		rankTree.remove(rankTree.lastKey()); 
 		}
@@ -83,7 +87,7 @@ public class Pair_Reducer3 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 			DoubleWritable freq = new DoubleWritable(); // must inside loop so new freq for each line.
 			freq.set(d);    // convert freq to DoubleWritable
 			Text coWord = new Text(rankTree.get(d)); // convert coWord to WordPair
-			System.out.println("++++++" + coWord.toString() + ", " + freq.get());
+			//System.out.println("++++++" + coWord.toString() + ", " + freq.get());
 			context.write(coWord, freq);
 		}
 	}
