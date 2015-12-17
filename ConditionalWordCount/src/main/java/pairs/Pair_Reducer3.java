@@ -47,7 +47,7 @@ public class Pair_Reducer3 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 			freq = round(freq,6);
 			String wordPair = key.toString();
 			if(rankTree.containsKey(freq))
-				freq = freq + 0.000001; // hack as treeMap cannot take same value keys
+				freq += 0.000001; // hack as treeMap cannot take same value keys
 			rankTree.put(freq, wordPair);
 			System.out.println("******" + wordPair + ", " + freq);
 			//System.out.println("++++ Size of Tree: " + rankTree.size());
