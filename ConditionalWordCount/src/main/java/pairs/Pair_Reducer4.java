@@ -19,7 +19,6 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
-import utilities.ItemPair;
 import utilities.WordPair;
 
 public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWritable> {
@@ -46,7 +45,7 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 		else{
 			int count = calcSum(values);  // calc Total Count
 			double freq = (count*1.0)/marginalCount.get();  // calc conditional prob
-			freq = round(freq,6);
+			freq = round(freq,4);
 			String wordPair = key.toString();
 			list.add(new ItemPair(freq, wordPair));
 			System.out.println("******" + wordPair + ", " + freq);
@@ -81,7 +80,11 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 	@Override
 	protected void cleanup(Context context) throws IOException, InterruptedException{
 		
-		Collections.sort(list); // Sort the list
+		//System.out.println("++++++++++SORTED+++++++++");
+		Collections.sort(list, Collections.reverseOrder()); // Sort the list in desc order
+		for(ItemPair i : list){
+			System.out.println(i);
+		}
 		
 		for(int i=0; i<10; i++){
 			ItemPair ip = list.get(i);
@@ -111,10 +114,15 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 		
 }	
 
+/** Container class for coword and its frequency that which will be added to 
+ * the topN List.
+ * @author hduser
+ *
+ */
 class ItemPair implements Comparable<ItemPair>{
 	
-	private double x;
-	private String s;
+	private double x;  // frequency
+	private String s;  // coWord
 	
 	public ItemPair(double x, String s){
 		this.x = x;
