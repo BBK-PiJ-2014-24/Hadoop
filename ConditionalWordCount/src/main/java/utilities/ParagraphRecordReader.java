@@ -1,3 +1,7 @@
+/**
+ * Record Reader to read paragraph chunks. Refer to blog.minjar.com
+ */
+
 package utilities;
 
 import java.io.IOException;
