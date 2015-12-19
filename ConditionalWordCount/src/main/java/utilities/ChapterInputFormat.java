@@ -1,5 +1,9 @@
 package utilities;
 
+/**
+ * Extension  of FileInpuSystem for ChapterRecordReader 
+ */
+
 import java.io.IOException;
 
 import org.apache.hadoop.io.LongWritable;
