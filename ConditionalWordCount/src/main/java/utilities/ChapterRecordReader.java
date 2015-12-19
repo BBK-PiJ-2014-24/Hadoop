@@ -1,5 +1,6 @@
 /**
- * Record Reader to read paragraph chunks. Refer to hadooopi.com
+ * Record Reader to split text by chapters. Refer to hadooopi.com 
+ * for adaptation of code.
  */
 
 package utilities;
