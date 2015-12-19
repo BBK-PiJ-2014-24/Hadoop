@@ -25,7 +25,7 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 
 	private Text star = new Text("*");
 	//private IntWritable result = new IntWritable();
-	private IntWritable marginalCount = new IntWritable();
+	private static IntWritable marginalCount = new IntWritable();
 	//private TreeMap<Double, String> rankTree = new TreeMap<Double, String>(Collections.reverseOrder());
 	private ArrayList<ItemPair> list = new ArrayList<ItemPair>();
 	
@@ -36,11 +36,13 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 	 */
 	public void reduce(WordPair key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException{
 		
+		
 		// find the (for,*) first to calc marginalCount FIRST 
 		if(key.getRight().equals(star)){
-			//System.out.println("\n**** before marginal count: " + marginalCount.get());
-			marginalCount.set(marginalCount.get() + calcSum(values));
-			//System.out.println("**** after marginal count" + marginalCount.get() + "\tincrement: " + calcSum(values));
+			System.out.println("\n**** before marginal count: " + marginalCount.get());
+			int deltaCount = 1;
+			marginalCount.set(marginalCount.get() + deltaCount);
+			System.out.println("**** after marginal count" + marginalCount.get() + "\tincrement: " + deltaCount);
 		}
 		else{
 			int count = calcSum(values);  // calc Total Count
@@ -82,9 +84,9 @@ public class Pair_Reducer4 extends Reducer<WordPair, IntWritable, Text, DoubleWr
 		
 		//System.out.println("++++++++++SORTED+++++++++");
 		Collections.sort(list, Collections.reverseOrder()); // Sort the list in desc order
-		for(ItemPair i : list){
-			System.out.println(i);
-		}
+		//for(ItemPair i : list){
+		//	System.out.println(i);
+		//}
 		
 		for(int i=0; i<10; i++){
 			ItemPair ip = list.get(i);
