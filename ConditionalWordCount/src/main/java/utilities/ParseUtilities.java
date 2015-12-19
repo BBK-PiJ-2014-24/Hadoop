@@ -54,16 +54,20 @@ public class ParseUtilities {
        	
     	char c1 = str.charAt(0);
     	char c2 = str.charAt(end);
+    	char c3 = str.charAt(end-1); 
     	
-    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2) && str.length() > 2)  // Double apostrophe
+    	if(!Character.isAlphabetic(c1) && !Character.isAlphabetic(c2) && str.length() > 2){  // Double apostrophe
     		str = str.substring(1,end);
-    	
-    	else if(!Character.isAlphabetic(c1))   // Single Quote
+    	}
+    	else if(!Character.isAlphabetic(c1)) {  // Single Quote
     		str = str.substring(1);
-    	
-    	else if(!Character.isAlphabetic(c2))   // Punctuation
-    		str = str.substring(0,end); 
-    	
+    	}
+    	else if(!Character.isAlphabetic(c2)){   // End Punctuation
+    		str = str.substring(0,end);
+    		if(!Character.isAlphabetic(c3)){
+    			str=str.substring(0,end-1);
+    		}// for punctuation and quote mark
+    	}
 
 
     	return str;
@@ -85,8 +89,18 @@ public class ParseUtilities {
     		str = str.substring(0, end-1);
     		end = str.length()-1;
     	}
+    	
+    	for(int i=0;i<end;i++){            // check for abreviated words e.g. I've
+    		char c = str.charAt(i);
+    		if(!Character.isAlphabetic(c)){
+    			str = str.substring(0,i);
+    			end = str.length()-1;
+    			break;
+    		}		
+    	}
+    		
   
-    	if(end+1 > 3){
+    	if(end+1 > 4){
 	    	// -ing screen with min word length to avoid r-ing, 
 	    	if(str.substring(end-2).equals("ing") && end+1 > 5){
 	    		str = str.substring(0,end-2);
